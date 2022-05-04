@@ -1,0 +1,12 @@
+{
+    "name": "Custom_Assets_Library",
+    "version_number": "0.9.0",
+    "website_url": "",
+    "description": "Custom Assets Library is a new tool to bring TaleWeaver support early.",
+    "dependencies":
+	[
+        "bbepisTaleSpire-BepInExPack-5.4.10",
+	"brcoding-SetInjectionFlagPlugin-2.3.0",
+	"HolloFox_TS-AssetToolTipPlugin-1.0.2"
+    ]
+}
