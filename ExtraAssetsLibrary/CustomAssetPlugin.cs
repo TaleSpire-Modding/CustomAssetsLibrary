@@ -32,17 +32,18 @@ namespace CustomAssetsLibrary
 
         internal static ConfigEntry<bool> AutoClear { get; set; }
         internal static ConfigEntry<LogLevel> LogLevel { get; set; }
-
-        /// <summary>
-        ///     List of all callbacks being run on an asset being loaded
-        /// </summary>
-        public static DictionaryList<string, Func<NGuid, AssetDb.DbEntry.EntryKind, bool>> CoreAssetPrefixCallbacks =
-            new DictionaryList<string, Func<NGuid, AssetDb.DbEntry.EntryKind, bool>>();
+        internal static Harmony harmony;
 
         public static void DoPatching()
         {
-            var harmony = new Harmony(Guid);
+            harmony = new Harmony(Guid);
             harmony.PatchAll();
+            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin: Patched.");
+        }
+
+        public static void UnPatch()
+        {
+            harmony.UnpatchSelf();
             if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin: Patched.");
         }
 
@@ -58,6 +59,11 @@ namespace CustomAssetsLibrary
             DoConfig(Config);
             DoPatching();
             if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
+
+            /*var directory = @"C:\Users\Akame\AppData\Roaming\r2modmanPlus-local\TaleSpire\profiles\CMPDev\BepInEx\plugins\CAL";
+            var pack = new AssetPackContent();
+            pack.FromJson(directory);
+            WritePack(directory,pack);*/
         }
 
         public static void WritePack(string directory, AssetPackContent content)

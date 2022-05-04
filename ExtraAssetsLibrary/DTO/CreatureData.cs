@@ -60,7 +60,7 @@ namespace CustomAssetsLibrary.DTO
         {
             var builder = new BlobBuilder(Allocator.Persistent);
             ref var output = ref builder.ConstructRoot<Bounce.TaleSpire.AssetManagement.CreatureData>();
-            Construct(builder, ref output, assetPackId, id, isGmOnly, isDeprecated, name, description, @group, dbGroupTag, tags.ToArray(), baseLoaderData, modelLoaderData, baseCylinderBounds, modelCylinderBounds, headPos, torchPos, spellPos, hitPos, baseRadius, height, defaultScale, creatureBounds, iconInfo);
+            Construct(builder, ref output, assetPackId, id, isGmOnly, isDeprecated, name, description, group, dbGroupTag, tags.ToArray(), baseLoaderData, modelLoaderData, baseCylinderBounds, modelCylinderBounds, headPos, torchPos, spellPos, hitPos, baseRadius, height, defaultScale, creatureBounds, iconInfo);
             return output;
         }
 
@@ -90,39 +90,55 @@ namespace CustomAssetsLibrary.DTO
       Bounds creatureBounds,
       (int, Rect) iconInfo)
         {
+            int i = 0;
+            Debug.Log($"Line{i++}");
             creature.Id = id;
             creature.IsGmOnly = isGmOnly;
+            Debug.Log($"Line{i++}");
             creature.IsDeprecated = isDeprecated;
             builder.AllocateString(ref creature.Name, name);
+            Debug.Log($"Line{i++}");
             builder.AllocateString(ref creature.Description, description);
             builder.AllocateString(ref creature.Group, group);
-            ref DbGroupTag.Packed local1 = ref builder.Allocate(ref creature.GroupTag);
-            dbGroupTag.Pack(builder, ref local1);
+            Debug.Log($"Line{i++}");
+            // ref DbGroupTag.Packed local1 = ref builder.Allocate(ref creature.GroupTag);
+            // dbGroupTag.Pack(builder, ref local1);
+            Debug.Log($"Line{i++}");
             if (tags == null)
                 creature.Tags = new BlobArray<BlobString>();
             else
                 builder.ConstructStringArray(ref creature.Tags, tags);
+            Debug.Log($"Line{i++}");
             if (baseLoaderData != null)
             {
                 ref Bounce.TaleSpire.AssetManagement.AssetLoaderData.Packed local2 = ref builder.Allocate(ref creature.BaseAsset);
                 baseLoaderData.Pack(builder, baseLoaderData.assetPackId ?? assetPackId, ref local2);
             }
+            Debug.Log($"Line{i++}");
             ref Bounce.TaleSpire.AssetManagement.AssetLoaderData.Packed local3 = ref builder.Allocate(ref creature.ModelAsset);
             modelLoaderData.Pack(builder, modelLoaderData.assetPackId ?? assetPackId, ref local3);
+            Debug.Log($"Line{i++}");
             creature.HeadPos = headPos;
             creature.TorchPos = torchPos;
+            Debug.Log($"Line{i++}");
             creature.SpellPos = spellPos;
             creature.BaseRadius = baseRadius;
+            Debug.Log($"Line{i++}");
             creature.HitPos = hitPos;
             creature.Height = height;
+            Debug.Log($"Line{i++}");
             creature.DefaultScale = defaultScale;
             creature.CreatureBounds = creatureBounds;
+            Debug.Log($"Line{i++}");
             creature.ModelCylinderBounds = modelCylinderBounds;
             creature.BaseCylinderBounds = baseCylinderBounds;
+            Debug.Log($"Line{i++}");
             ref int local4 = ref creature.IconAtlasIndex;
             ref Rect local5 = ref creature.IconAtlasRegion;
+            Debug.Log($"Line{i++}");
             (int, Rect) tuple = iconInfo;
             int num = tuple.Item1;
+            Debug.Log($"Line{i++}");
             local4 = num;
             local5 = tuple.Item2;
         }

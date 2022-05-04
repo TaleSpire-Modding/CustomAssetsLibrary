@@ -40,6 +40,7 @@
     <Compile Include="DTO\AssetPackContent.cs" />
     <Compile Include="DTO\Atlas.cs" />
     <Compile Include="DTO\CreatureData.cs" />
+    <Compile Include="DTO\Index.cs" />
     <Compile Include="DTO\MusicData.cs" />
     <Compile Include="DTO\PlaceableData.cs" />
     <Compile Include="ReflecExt\SysReflec.cs" />
