@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using BepInEx;
 using BepInEx.Configuration;
 using Bounce.Unmanaged;
@@ -38,20 +37,20 @@ namespace CustomAssetsLibrary
         {
             harmony = new Harmony(Guid);
             harmony.PatchAll();
-            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin: Patched.");
+            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Patched.");
         }
 
         public static void UnPatch()
         {
             harmony.UnpatchSelf();
-            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin: Patched.");
+            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Patched.");
         }
 
         public static void DoConfig(ConfigFile Config)
         {
             AutoClear = Config.Bind("Mini Loading", "Auto Clear Failed Minis", false);
             LogLevel = Config.Bind("Logging", "Level", CustomAssetsLibrary.LogLevel.Low);
-            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin: Config Bound.");
+            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Config Bound.");
         }
 
         private void Awake()

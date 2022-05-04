@@ -1,14 +1,8 @@
-﻿using BepInEx;
-using Bounce.Unmanaged;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.Mathematics;
+﻿using System.Collections.Generic;
+using BepInEx;
 using UnityEngine;
 
-namespace LordAshes
+namespace CustomAssetsLibrary.DTO
 {
     public partial class CustomAssetsPlugin : BaseUnityPlugin
     {
