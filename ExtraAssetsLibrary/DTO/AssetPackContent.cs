@@ -90,9 +90,11 @@ namespace CustomAssetsLibrary.DTO
                 };
                 Atlases.Add(newAtlas);
             }
+            Debug.Log($"Loaded: {index.IconsAtlas.Count} Atlas packs");
 
             foreach (var music in index.Music)
             {
+                Debug.Log($"Loaded {music.Name} into ");
                 var newMusic = new MusicData
                 {
                     Id = new NGuid(music.Id),
@@ -105,6 +107,7 @@ namespace CustomAssetsLibrary.DTO
                     tags = music.Tags,
                 };
                 Music.Add(newMusic);
+                Debug.Log($"Loaded {music.Name} music into APC");
             }
 
             foreach (var tile in index.Tiles)
@@ -138,6 +141,8 @@ namespace CustomAssetsLibrary.DTO
                     });
                 }
                 Tiles.Add(newTile);
+
+                Debug.Log($"Loaded {tile.Name} tile into APC");
             }
 
             foreach (var prop in index.Props)
@@ -170,6 +175,7 @@ namespace CustomAssetsLibrary.DTO
                     });
                 }
                 Props.Add(newProp);
+                Debug.Log($"Loaded {prop.Name} prop into APC");
             }
 
             foreach (var creature in index.Creatures)
@@ -207,6 +213,7 @@ namespace CustomAssetsLibrary.DTO
                     tags = creature.Tags
                 };
                 Creatures.Add(creatureData);
+                Debug.Log($"Loaded {creature.Name} creature into APC");
             }
         }
     }
