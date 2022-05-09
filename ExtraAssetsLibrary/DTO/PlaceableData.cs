@@ -30,9 +30,8 @@ namespace CustomAssetsLibrary.DTO
         public int IconAtlasIndex;
         public Rect IconAtlasRegion;
 
-        internal Bounce.TaleSpire.AssetManagement.PlaceableData ToBRPlaceableData()
+        internal Bounce.TaleSpire.AssetManagement.PlaceableData ToBRPlaceableData(BlobBuilder builder)
         {
-            var builder = new BlobBuilder(Allocator.Persistent);
             ref var placeable = ref builder.ConstructRoot<Bounce.TaleSpire.AssetManagement.PlaceableData>();
 
             placeable.OrientationOffset = OrientationOffset;

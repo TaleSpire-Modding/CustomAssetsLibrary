@@ -10,13 +10,11 @@ namespace CustomAssetsLibrary.DTO
         public int SizeX;
         public int SizeY;
 
-        internal Bounce.TaleSpire.AssetManagement.Atlas ToBRAtlas()
+        internal Bounce.TaleSpire.AssetManagement.Atlas ToBRAtlas(BlobBuilder builder)
         {
-            var builder = new BlobBuilder(Allocator.Persistent);
             ref var output = ref builder.ConstructRoot<Bounce.TaleSpire.AssetManagement.Atlas>();
             builder.AllocateString(ref output.LocalPath,LocalPath);
             output.Size = new int2(SizeX, SizeY);
-
             return output;
         }
     }

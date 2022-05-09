@@ -16,9 +16,8 @@ namespace CustomAssetsLibrary.DTO
         public string assetName = "";
         public Bounce.TaleSpire.AssetManagement.MusicData.MusicKind kind = Bounce.TaleSpire.AssetManagement.MusicData.MusicKind.Music;
 
-        internal Bounce.TaleSpire.AssetManagement.MusicData ToBRMusic()
+        internal Bounce.TaleSpire.AssetManagement.MusicData ToBRMusic(BlobBuilder builder)
         {
-            var builder = new BlobBuilder(Allocator.Persistent);
             ref var blobAsset = ref builder.ConstructRoot<Bounce.TaleSpire.AssetManagement.MusicData>();
             Bounce.TaleSpire.AssetManagement.MusicData.Construct(builder,ref blobAsset,assetPackId,Id,name,description,tags.ToArray(),bundleId,assetName,kind);
             return blobAsset;

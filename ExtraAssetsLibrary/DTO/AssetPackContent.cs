@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
 using LordAshes;
@@ -13,48 +14,20 @@ namespace CustomAssetsLibrary.DTO
 {
     public class AssetPackContent
     {
-        public List<PlaceableData> Props = new List<PlaceableData>();
-        public List<PlaceableData> Tiles = new List<PlaceableData>();
+        public List<PlaceableData> Placeable = new List<PlaceableData>();
         public List<CreatureData> Creatures = new List<CreatureData>();
         public List<Atlas> Atlases = new List<Atlas>();
         public List<MusicData> Music = new List<MusicData>();
 
         internal BlobAssetReference<AssetPackIndex> GenerateBlobAssetReference()
         {
-            var builder = new BlobBuilder(Allocator.Temp);
+            var builder = new BlobBuilder(Allocator.Persistent);
             ref var blobAsset = ref builder.ConstructRoot<AssetPackIndex>();
-
-            var creatureArry = builder.Allocate(ref blobAsset.Creatures, Creatures.Count);
-            for (int i = 0; i < Creatures.Count; i++)
-            {
-                creatureArry[i] = Creatures[i].ToBRCreatureData();
-            }
-
-            var placeableArry = builder.Allocate(ref blobAsset.Placeables, Props.Count + Tiles.Count);
-            for (int i = 0; i < Props.Count; i++)
-            {
-                placeableArry[i] = Props[i].ToBRPlaceableData();
-            }
-            for (int i = 0; i < Tiles.Count; i++)
-            {
-                placeableArry[i+Props.Count] = Tiles[i].ToBRPlaceableData();
-            }
-
-            var atlasArry = builder.Allocate(ref blobAsset.Atlases, Atlases.Count);
-            for (int i = 0; i < Atlases.Count; i++)
-            {
-                atlasArry[i] = Atlases[i].ToBRAtlas();
-            }
-
-            var musicArry = builder.Allocate(ref blobAsset.Music, Music.Count);
-            for (int i = 0; i < Music.Count; i++)
-            {
-                musicArry[i] = Music[i].ToBRMusic();
-            }
-
-            var blobref = builder.CreateBlobAssetReference<AssetPackIndex>(Allocator.Persistent);
-            
-            return blobref;
+            builder.Construct(ref blobAsset.Creatures, Creatures.Select(c => c.ToBRCreatureData(builder)).ToArray());
+            builder.Construct(ref blobAsset.Placeables, Placeable.Select(c => c.ToBRPlaceableData(builder)).ToArray());
+            builder.Construct(ref blobAsset.Atlases, Atlases.Select(c => c.ToBRAtlas(builder)).ToArray());
+            builder.Construct(ref blobAsset.Music, Music.Select(c => c.ToBRMusic(builder)).ToArray());
+            return builder.CreateBlobAssetReference<AssetPackIndex>(Allocator.Persistent);
         }
 
         public void FromJson(string path)
@@ -84,8 +57,8 @@ namespace CustomAssetsLibrary.DTO
             {
                 var newAtlas = new Atlas
                 {
-                    SizeX = 64,
-                    SizeY = 64,
+                    SizeX = 128,
+                    SizeY = 128,
                     LocalPath = atlas.Path
                 };
                 Atlases.Add(newAtlas);
@@ -140,7 +113,7 @@ namespace CustomAssetsLibrary.DTO
                         path = tileAsset.LoaderData.BundleId
                     });
                 }
-                Tiles.Add(newTile);
+                Placeable.Add(newTile);
 
                 Debug.Log($"Loaded {tile.Name} tile into APC");
             }
@@ -174,7 +147,7 @@ namespace CustomAssetsLibrary.DTO
                         path = propAsset.LoaderData.BundleId
                     });
                 }
-                Props.Add(newProp);
+                Placeable.Add(newProp);
                 Debug.Log($"Loaded {prop.Name} prop into APC");
             }
 
@@ -198,6 +171,11 @@ namespace CustomAssetsLibrary.DTO
                         scale = VectorFromString(creature.MiniAsset.Scale),
                         path = creature.MiniAsset.LoaderData.BundleId,
                         rotation = RotationFromString(creature.MiniAsset.Rotation)
+                    },
+                    dbGroupTag = new DbGroupTag
+                    {
+                        Order = 0,
+                        Name = creature.GroupTag
                     },
                     name = creature.Name,
                     description = creature.Name,
