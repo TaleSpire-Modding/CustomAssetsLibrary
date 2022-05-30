@@ -7,8 +7,8 @@ namespace CustomAssetsLibrary.DTO
     public class Atlas
     {
         public string LocalPath = "";
-        public int SizeX;
-        public int SizeY;
+        public int SizeX = 128;
+        public int SizeY = 128;
 
         internal Bounce.TaleSpire.AssetManagement.Atlas ToBRAtlas(BlobBuilder builder)
         {

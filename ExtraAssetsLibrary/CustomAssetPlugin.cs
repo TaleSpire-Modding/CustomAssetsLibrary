@@ -27,7 +27,7 @@ namespace CustomAssetsLibrary
     {
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetLib";
-        public const string Version = "1.0.0.0";
+        public const string Version = "0.10.0.0";
         private const string Name = "Plugin Masters' Custom Asset Library";
 
         internal static ConfigEntry<bool> AutoClear { get; set; }
@@ -68,7 +68,7 @@ namespace CustomAssetsLibrary
         {
             AutoClear = Config.Bind("Mini Loading", "Auto Clear Failed Minis", false);
             LogLevel = Config.Bind("Logging", "Level", CustomAssetsLibrary.LogLevel.Low);
-            RunTestsConfig = Config.Bind("Tests", "Execute", true);
+            RunTestsConfig = Config.Bind("Tests", "Execute", false);
             if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Config Bound.");
         }
 
@@ -76,30 +76,22 @@ namespace CustomAssetsLibrary
         {
             DoConfig(Config);
             DoPatching();
-            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
-
-
-            Generate(@"C:\Users\Akame\AppData\Roaming\r2modmanPlus-local\TaleSpire\profiles\CMPDev\BepInEx\plugins\HolloFox_TS-Minis_Demo_Pack_Aarakockra");
+            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin:{Name} is Active."); 
             // if (RunTestsConfig.Value) RunTests();
         }
 
-        // Public interfact method to generate a binary INDEX for CAP
+        // Public interface method to generate a binary INDEX for CAP
         public static void Generate(string directory)
         {
-            // var directory = @"C:\Users\Akame\AppData\Roaming\r2modmanPlus-local\TaleSpire\profiles\CMPDev\BepInEx\plugins\CAL";
             var pack = new AssetPackContent();
             pack.FromJson(directory);
             Debug.Log($"Added {Path.Combine(directory, "index")}");
             WritePack(directory, pack);
         }
 
-
-
         public static void WritePack(string directory, AssetPackContent content)
         { 
             var blobref = content.GenerateBlobAssetReference();
-            // AssetDbLoadDataPatch.packs.Add(Path.Combine(directory, "index"), blobref);
-
             var indexDestinationLocation = Path.Combine(directory, "index");
             var writer = new StreamBinaryWriter(indexDestinationLocation);
             writer.Write(blobref);

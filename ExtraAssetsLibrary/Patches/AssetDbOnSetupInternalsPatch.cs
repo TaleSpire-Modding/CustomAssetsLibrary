@@ -10,6 +10,7 @@ using UnityEngine;
 using System.Reflection;
 using Bounce.BlobAssets;
 using Bounce.TaleSpire.AssetManagement;
+using CustomAssetsLibrary;
 using CustomAssetsLibrary.DTO;
 using CustomAssetsLibrary.ReflecExt;
 using Unity.Collections;
@@ -19,21 +20,9 @@ using CreatureData = Bounce.TaleSpire.AssetManagement.CreatureData;
 // ReSharper disable once CheckNamespace
 namespace ExtraAssetsLibrary.Patches
 {
-    [HarmonyPatch(typeof(AssetLoader), "Init")]
-    public class AssetLoaderInit
-    {
-        public static void Prefix(IAssetContainer assetContainer, Transform parent, BlobView<Bounce.TaleSpire.AssetManagement.AssetLoaderData.Packed> data)
-        {
-            Debug.Log(data.Value.BundleId);
-            Debug.Log(data.Value.Scale);
-        }
-    }
-
     [HarmonyPatch(typeof(AssetDb), "OnInstanceSetup")]
     public class AssetDbOnSetupInternalsPatch
     {
-        
-
         private static string dirPlugin = BepInEx.Paths.PluginPath;
 
         public static bool HasSetup;
@@ -61,7 +50,6 @@ namespace ExtraAssetsLibrary.Patches
             var instance = SimpleSingletonBehaviour<AssetLoadManager>.Instance;
             var filename = Path.GetFileName(directory);
             var guid = GenerateID(filename);
-            // guid = new NGuid("d71427a1-5535-4fa7-82d7-4ca1e75edbfd");
             instance.call("RegisterAssetPack", new object[] { guid, directory });
             typeof(AssetDb)
                 .GetMethod("LoadAssetPack", BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic)

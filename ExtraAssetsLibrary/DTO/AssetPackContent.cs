@@ -31,8 +31,6 @@ namespace CustomAssetsLibrary.DTO
                 Placeable[i].ToBRPlaceableData(builder, ref placeables[i]);
             }
 
-            //builder.Construct(ref blobAsset.Placeables, Placeable.Select(c => c.ToBRPlaceableData(builder)).ToArray());
-
             var creatures = builder.Allocate(ref blobAsset.Creatures, Creatures.Count);
             for (int i = 0; i < creatures.Length; i++)
             {
