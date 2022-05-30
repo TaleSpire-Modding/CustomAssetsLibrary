@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Text;
 using Bounce.Singletons;
 using Bounce.Unmanaged;
@@ -10,15 +10,30 @@ using UnityEngine;
 using System.Reflection;
 using Bounce.BlobAssets;
 using Bounce.TaleSpire.AssetManagement;
+using CustomAssetsLibrary.DTO;
 using CustomAssetsLibrary.ReflecExt;
 using Unity.Collections;
+using Unity.Entities;
+using CreatureData = Bounce.TaleSpire.AssetManagement.CreatureData;
 
 // ReSharper disable once CheckNamespace
 namespace ExtraAssetsLibrary.Patches
 {
+    [HarmonyPatch(typeof(AssetLoader), "Init")]
+    public class AssetLoaderInit
+    {
+        public static void Prefix(IAssetContainer assetContainer, Transform parent, BlobView<Bounce.TaleSpire.AssetManagement.AssetLoaderData.Packed> data)
+        {
+            Debug.Log(data.Value.BundleId);
+            Debug.Log(data.Value.Scale);
+        }
+    }
+
     [HarmonyPatch(typeof(AssetDb), "OnInstanceSetup")]
     public class AssetDbOnSetupInternalsPatch
     {
+        
+
         private static string dirPlugin = BepInEx.Paths.PluginPath;
 
         public static bool HasSetup;
@@ -40,11 +55,12 @@ namespace ExtraAssetsLibrary.Patches
         /// </summary>
         public static void LoadDirectory(string directory)
         {
-            if (!File.Exists(Path.Combine(directory, "index"))) return; // Needs an index
+            if (!File.Exists(Path.Combine(directory, "index.json"))) return; // Needs an index
             Debug.Log($"Index found in: {directory}");
 
             var instance = SimpleSingletonBehaviour<AssetLoadManager>.Instance;
-            var guid = GenerateID(Path.GetFileName(directory));
+            var filename = Path.GetFileName(directory);
+            var guid = GenerateID(filename);
             // guid = new NGuid("d71427a1-5535-4fa7-82d7-4ca1e75edbfd");
             instance.call("RegisterAssetPack", new object[] { guid, directory });
             typeof(AssetDb)
@@ -63,6 +79,9 @@ namespace ExtraAssetsLibrary.Patches
 
         private static string CreateMD5(string input)
         {
+            // Don't hash if can parse
+            if (Guid.TryParse(input, out var result)) return input;
+            
             // Use input string to calculate MD5 hash
             using (var md5 = MD5.Create())
             {

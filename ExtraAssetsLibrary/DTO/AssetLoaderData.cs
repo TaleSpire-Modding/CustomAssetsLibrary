@@ -12,12 +12,12 @@ namespace CustomAssetsLibrary.DTO
         /// <summary>
         /// defaults to packaged asset pack
         /// </summary>
-        public NGuid? assetPackId;
+        public NGuid assetPackId;
         public string path = "";
         public string assetName = "";
-        public Vector3 position;
-        public Quaternion rotation;
-        public Vector3 scale;
+        public Vector3 position = Vector3.zero;
+        public Quaternion rotation = Quaternion.identity;
+        public Vector3 scale = Vector3.one;
 
         public bool HasPath => !string.IsNullOrWhiteSpace(this.path);
 
@@ -30,14 +30,16 @@ namespace CustomAssetsLibrary.DTO
             scale = Vector3.one
         };
 
-        public void Pack(BlobBuilder builder, NGuid assetPackId, ref Bounce.TaleSpire.AssetManagement.AssetLoaderData.Packed packed)
+        public void Pack(BlobBuilder builder, ref Bounce.TaleSpire.AssetManagement.AssetLoaderData.Packed packed)
         {
-            packed.AssetPackId = this.assetPackId ?? assetPackId;
-            builder.AllocateString(ref packed.BundleId, this.path);
-            builder.AllocateString(ref packed.AssetId, this.assetName);
-            packed.Position = (float3)this.position;
-            packed.Rotation = (quaternion)this.rotation;
-            packed.Scale = (float3)this.scale;
+            packed.AssetPackId = assetPackId;
+
+            builder.AllocateString(ref packed.BundleId, path);
+            builder.AllocateString(ref packed.AssetId, assetName);
+
+            packed.Position = (float3)position;
+            packed.Rotation = (quaternion)rotation;
+            packed.Scale = (float3)scale;
         }
     }
 }

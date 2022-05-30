@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Bounce.BlobAssets;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
-using LordAshes;
+using Moq;
 using Newtonsoft.Json;
 using Unity.Collections;
 using Unity.Entities;
@@ -21,13 +22,33 @@ namespace CustomAssetsLibrary.DTO
 
         internal BlobAssetReference<AssetPackIndex> GenerateBlobAssetReference()
         {
-            var builder = new BlobBuilder(Allocator.Persistent);
+            var builder = new BlobBuilder(Allocator.Temp);
             ref var blobAsset = ref builder.ConstructRoot<AssetPackIndex>();
-            builder.Construct(ref blobAsset.Creatures, Creatures.Select(c => c.ToBRCreatureData(builder)).ToArray());
-            builder.Construct(ref blobAsset.Placeables, Placeable.Select(c => c.ToBRPlaceableData(builder)).ToArray());
-            builder.Construct(ref blobAsset.Atlases, Atlases.Select(c => c.ToBRAtlas(builder)).ToArray());
+
+            var placeables = builder.Allocate(ref blobAsset.Placeables, Placeable.Count);
+            for (int i = 0; i < placeables.Length; i++)
+            {
+                Placeable[i].ToBRPlaceableData(builder, ref placeables[i]);
+            }
+
+            //builder.Construct(ref blobAsset.Placeables, Placeable.Select(c => c.ToBRPlaceableData(builder)).ToArray());
+
+            var creatures = builder.Allocate(ref blobAsset.Creatures, Creatures.Count);
+            for (int i = 0; i < creatures.Length; i++)
+            {
+                Creatures[i].ToBRCreatureData(builder, ref creatures[i]);
+            }
+
+            var atlases = builder.Construct(ref blobAsset.Atlases, Atlases.Select(c => c.ToBRAtlas(builder)).ToArray());
+            for (int i = 0; i < atlases.Length; i++)
+            {
+                builder.AllocateString(ref atlases[i].LocalPath, Atlases[i].LocalPath);
+            }
+
             builder.Construct(ref blobAsset.Music, Music.Select(c => c.ToBRMusic(builder)).ToArray());
-            return builder.CreateBlobAssetReference<AssetPackIndex>(Allocator.Persistent);
+            var api = builder.CreateBlobAssetReference<AssetPackIndex>(Allocator.Persistent);
+            builder.Dispose();
+            return api;
         }
 
         public void FromJson(string path)
@@ -37,21 +58,24 @@ namespace CustomAssetsLibrary.DTO
             LoadFromIndex(index);
         }
 
-        private Vector3 VectorFromString(string data)
+        private float3 VectorFromString(string data)
         {
-            var x = data.Split(',');
-            return new Vector3(float.Parse(x[0]), float.Parse(x[1]), float.Parse(x[2]));
+            var x = data.Split(',').Select(s => s.Replace(",","")).ToArray();
+            return new float3(float.Parse(x[0]), float.Parse(x[1]), float.Parse(x[2]));
         }
 
         private quaternion RotationFromString(string data)
         {
-            var x = data.Split(',');
+            var x = data.Split(',').Select(s => s.Replace(",", "")).ToArray();
             return new quaternion(float.Parse(x[0]), float.Parse(x[1]), float.Parse(x[2]),0f);
         }
 
         private void LoadFromIndex(CustomAssetsPlugin.Data.Index index)
         {
             var assetPackId = new NGuid(index.assetPackId);
+            Debug.Log($"asset pack being loaded:{assetPackId}");
+
+            Debug.Log($"Loading Atlas packs");
 
             foreach (var atlas in index.IconsAtlas)
             {
@@ -99,7 +123,6 @@ namespace CustomAssetsLibrary.DTO
                     IsGmOnly = false,
                     Kind = PlaceableKind.Tile,
                     OrientationOffset = 0,
-                    
                 };
                 foreach (var tileAsset in tile.Assets)
                 {
@@ -161,7 +184,7 @@ namespace CustomAssetsLibrary.DTO
                     isDeprecated = creature.IsDeprecated,
                     isGmOnly = false,
                     group = creature.GroupTag,
-                    baseRadius = creature.DefaultScale,
+                    baseRadius = 0.6f,
                     baseLoaderData = CreatureData.DefaultBase,
                     modelLoaderData = new AssetLoaderData
                     {
@@ -179,13 +202,13 @@ namespace CustomAssetsLibrary.DTO
                     },
                     name = creature.Name,
                     description = creature.Name,
-                    spellPos = new float3(0,0,0),
-                    headPos = new float3(0, 0, 0),
-                    hitPos = new float3(0, 0, 0),
-                    torchPos = new float3(0, 0, 0),
-                    baseCylinderBounds = new CreatureCylinderBounds(new float3(0,0,0), 1, 1),
+                    spellPos = float3.zero,
+                    headPos = float3.zero,
+                    hitPos = float3.zero,
+                    torchPos = float3.zero,
+                    baseCylinderBounds = new CreatureCylinderBounds(new float3(0,0,0), 1, 0.6f),
                     creatureBounds = new Bounds(),
-                    modelCylinderBounds = new CreatureCylinderBounds(new float3(0, 0, 0), 1, 1),
+                    modelCylinderBounds = new CreatureCylinderBounds(new float3(0, 0, 0), 1, 0.6f),
                     height = 1,
                     iconInfo = (creature.Icon.AtlasIndex,creature.Icon.Region.ToRegion),
                     tags = creature.Tags

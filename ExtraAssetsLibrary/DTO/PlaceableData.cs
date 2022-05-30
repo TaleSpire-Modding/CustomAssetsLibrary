@@ -30,10 +30,8 @@ namespace CustomAssetsLibrary.DTO
         public int IconAtlasIndex;
         public Rect IconAtlasRegion;
 
-        internal Bounce.TaleSpire.AssetManagement.PlaceableData ToBRPlaceableData(BlobBuilder builder)
+        internal void ToBRPlaceableData(BlobBuilder builder, ref Bounce.TaleSpire.AssetManagement.PlaceableData placeable)
         {
-            ref var placeable = ref builder.ConstructRoot<Bounce.TaleSpire.AssetManagement.PlaceableData>();
-
             placeable.OrientationOffset = OrientationOffset;
             placeable.Id = Id;
             placeable.IsGmOnly = IsGmOnly;
@@ -56,10 +54,7 @@ namespace CustomAssetsLibrary.DTO
 
             for (int i = 0; i < Assets.Count; i++)
             {
-                var assetBuilder = new BlobBuilder(Allocator.Persistent);
-                ref var newPack = ref assetBuilder.ConstructRoot<Bounce.TaleSpire.AssetManagement.AssetLoaderData.Packed>();
-                Assets[i].Pack(assetBuilder,Assets[i].assetPackId ?? assetPackId,ref newPack);
-                blobBuilderArray[i] = newPack;
+                Assets[i].Pack(builder, ref blobBuilderArray[i]);
             }
 
             builder.Allocate<AssetScriptIndex>(ref placeable.AssetScripts, 0);
@@ -68,8 +63,6 @@ namespace CustomAssetsLibrary.DTO
             placeable.IconAtlasRegion = IconAtlasRegion;
             placeable.Kind = Kind;
             placeable.GroupTag.Value = GroupTag;
-
-            return placeable;
         }
 
         private static void ConstructEmptyScript(

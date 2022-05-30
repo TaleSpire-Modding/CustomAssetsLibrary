@@ -79,22 +79,27 @@ namespace CustomAssetsLibrary
             if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin:{Name} is Active.");
 
 
-            Generate();
+            Generate(@"C:\Users\Akame\AppData\Roaming\r2modmanPlus-local\TaleSpire\profiles\CMPDev\BepInEx\plugins\HolloFox_TS-Minis_Demo_Pack_Aarakockra");
             // if (RunTestsConfig.Value) RunTests();
         }
 
-        public static void Generate()
+        // Public interfact method to generate a binary INDEX for CAP
+        public static void Generate(string directory)
         {
-            var directory = @"C:\Users\Akame\AppData\Roaming\r2modmanPlus-local\TaleSpire\profiles\CMPDev\BepInEx\plugins\CAL";
+            // var directory = @"C:\Users\Akame\AppData\Roaming\r2modmanPlus-local\TaleSpire\profiles\CMPDev\BepInEx\plugins\CAL";
             var pack = new AssetPackContent();
             pack.FromJson(directory);
-            // pack.GenerateBlobAssetReference();
+            Debug.Log($"Added {Path.Combine(directory, "index")}");
             WritePack(directory, pack);
         }
 
+
+
         public static void WritePack(string directory, AssetPackContent content)
         { 
-            var blobref = content.GenerateBlobAssetReference(); 
+            var blobref = content.GenerateBlobAssetReference();
+            // AssetDbLoadDataPatch.packs.Add(Path.Combine(directory, "index"), blobref);
+
             var indexDestinationLocation = Path.Combine(directory, "index");
             var writer = new StreamBinaryWriter(indexDestinationLocation);
             writer.Write(blobref);

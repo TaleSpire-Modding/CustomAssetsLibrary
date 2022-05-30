@@ -2,6 +2,7 @@
 using Bounce.BlobAssets;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
+using Moq;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -29,7 +30,7 @@ namespace CustomAssetsLibrary.DTO
             path = "char_base01_1462710208",
             assetName = "clothBase",
             position = new Vector3(0f, 0f, 0f),
-            scale = new Vector3(1f, 1f, 1f),
+            scale = new Vector3(0.6f, 0.6f, 0.6f),
             rotation = new Quaternion(0f, -0.5735762f, 0f, 0.8191524f)
         };
 
@@ -56,11 +57,9 @@ namespace CustomAssetsLibrary.DTO
         public Bounds creatureBounds;
         public (int, Rect) iconInfo;
 
-        internal Bounce.TaleSpire.AssetManagement.CreatureData ToBRCreatureData(BlobBuilder builder)
+        internal void ToBRCreatureData(BlobBuilder builder, ref Bounce.TaleSpire.AssetManagement.CreatureData output)
         {
-            ref var output = ref builder.ConstructRoot<Bounce.TaleSpire.AssetManagement.CreatureData>();
             Construct(builder, ref output, assetPackId, id, isGmOnly, isDeprecated, name, description, group, dbGroupTag, tags.ToArray(), baseLoaderData, modelLoaderData, baseCylinderBounds, modelCylinderBounds, headPos, torchPos, spellPos, hitPos, baseRadius, height, defaultScale, creatureBounds, iconInfo);
-            return output;
         }
 
         internal static void Construct(
@@ -90,39 +89,43 @@ namespace CustomAssetsLibrary.DTO
       (int, Rect) iconInfo)
         {
             creature.Id = id;
-            creature.IsGmOnly = isGmOnly;
-            creature.IsDeprecated = isDeprecated;
             builder.AllocateString(ref creature.Name, name);
             builder.AllocateString(ref creature.Description, description);
             builder.AllocateString(ref creature.Group, group);
-            
-            ref DbGroupTag.Packed local1 = ref builder.ConstructRoot<DbGroupTag.Packed>();
-            local1.Order = dbGroupTag.Order;
+
+            ref var local1 = ref builder.Allocate(ref creature.GroupTag);
             builder.AllocateString(ref local1.Name, dbGroupTag.Name);
-            dbGroupTag.Pack(builder, ref local1);
-            builder.SetPointer(ref creature.GroupTag,ref local1);
+            local1.Order = dbGroupTag.Order;
 
             if (tags == null)
                 creature.Tags = new BlobArray<BlobString>();
             else
                 builder.ConstructStringArray(ref creature.Tags, tags);
+
+            creature.IsGmOnly = isGmOnly;
+            creature.IsDeprecated = isDeprecated;
+
             if (baseLoaderData != null)
             {
                 ref Bounce.TaleSpire.AssetManagement.AssetLoaderData.Packed local2 = ref builder.Allocate(ref creature.BaseAsset);
-                baseLoaderData.Pack(builder, baseLoaderData.assetPackId ?? assetPackId, ref local2);
+                baseLoaderData.Pack(builder, ref local2);
             }
             ref Bounce.TaleSpire.AssetManagement.AssetLoaderData.Packed local3 = ref builder.Allocate(ref creature.ModelAsset);
-            modelLoaderData.Pack(builder, modelLoaderData.assetPackId ?? assetPackId, ref local3);
+            modelLoaderData.Pack(builder, ref local3);
+
             creature.HeadPos = headPos;
             creature.TorchPos = torchPos;
             creature.SpellPos = spellPos;
-            creature.BaseRadius = baseRadius;
             creature.HitPos = hitPos;
+            
+            creature.BaseRadius = baseRadius;
             creature.Height = height;
             creature.DefaultScale = defaultScale;
-            creature.CreatureBounds = creatureBounds;
-            creature.ModelCylinderBounds = modelCylinderBounds;
+
             creature.BaseCylinderBounds = baseCylinderBounds;
+            creature.ModelCylinderBounds = modelCylinderBounds;
+
+            creature.CreatureBounds = creatureBounds;
             creature.IconAtlasIndex = iconInfo.Item1;
             creature.IconAtlasRegion= iconInfo.Item2;
         }

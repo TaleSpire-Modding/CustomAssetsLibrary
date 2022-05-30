@@ -33,8 +33,8 @@ namespace CustomAssetsLibrary.DTO
                 public string serializedVersion { get; set; } = "";
                 public float x { get; set; } = 0f;
                 public float y { get; set; } = 0f;
-                public float width { get; set; } = 0f;
-                public float height { get; set; } = 0f;
+                public float width { get; set; } = 1f;
+                public float height { get; set; } = 1f;
 
                 public Rect ToRegion => new Rect(x, y, width, height);
             }
