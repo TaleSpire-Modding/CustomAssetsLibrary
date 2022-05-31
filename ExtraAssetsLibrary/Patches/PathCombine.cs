@@ -13,7 +13,7 @@ namespace ExtraAssetsLibrary.Patches
         public static bool Prefix(ref string path1, ref string path2, ref string __result)
         {
             bool proceed = true;
-            if (CustomAssetLib.LogLevel.Value >= LogLevel.Medium)
+            if (CustomAssetLib.LogLevel.Value == LogLevel.All)
                 Debug.Log($"Before: {path1}, {path2}");
 
             if (path1 == "Assets" && path2.StartsWith("../"))
@@ -30,7 +30,7 @@ namespace ExtraAssetsLibrary.Patches
                 }
             }
 
-            if (CustomAssetLib.LogLevel.Value >= LogLevel.Medium)
+            if (CustomAssetLib.LogLevel.Value == LogLevel.All)
                 Debug.Log($"After: {path1}, {path2}");
 
             return proceed;
