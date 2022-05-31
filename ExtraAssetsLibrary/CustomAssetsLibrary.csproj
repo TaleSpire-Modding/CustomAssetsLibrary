@@ -46,6 +46,7 @@
     <Compile Include="DTO\Index.cs" />
     <Compile Include="DTO\MusicData.cs" />
     <Compile Include="DTO\PlaceableData.cs" />
+    <Compile Include="Patches\PathCombine.cs" />
     <Compile Include="Tests\DTO\AssetPackTest.cs" />
     <Compile Include="Tests\DTO\AssetLoaderTest.cs" />
     <Compile Include="Tests\DTO\CreatureTest.cs" />
@@ -55,7 +56,7 @@
     <Compile Include="Tests\DTO\IndexTest.cs" />
     <Compile Include="ReflecExt\SysReflec.cs" />
     <Compile Include="Patches\AssetDbOnSetupInternalsPatch.cs" />
-    <Compile Include="CustomAssetPlugin.cs" />
+    <Compile Include="CustomAssetLib.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

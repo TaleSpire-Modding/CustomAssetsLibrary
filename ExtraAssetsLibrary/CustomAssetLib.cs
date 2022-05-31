@@ -23,7 +23,7 @@ namespace CustomAssetsLibrary
 
 
     [BepInPlugin(Guid, Name, Version)]
-    public class CustomAssetPlugin : BaseUnityPlugin
+    public class CustomAssetLib : BaseUnityPlugin
     {
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetLib";
