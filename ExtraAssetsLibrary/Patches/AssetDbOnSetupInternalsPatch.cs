@@ -13,6 +13,7 @@ using Bounce.TaleSpire.AssetManagement;
 using CustomAssetsLibrary;
 using CustomAssetsLibrary.DTO;
 using CustomAssetsLibrary.ReflecExt;
+using Newtonsoft.Json;
 using Unity.Collections;
 using Unity.Entities;
 using CreatureData = Bounce.TaleSpire.AssetManagement.CreatureData;
@@ -49,9 +50,10 @@ namespace ExtraAssetsLibrary.Patches
             if (!File.Exists(Path.Combine(directory, "index.json"))) return; // Needs an index
             Debug.Log($"Index found in: {directory}");
 
+            string text = File.ReadAllText(Path.Combine(directory, "index.json"));
+            var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            var guid = new NGuid(index.assetPackId);
             var instance = SimpleSingletonBehaviour<AssetLoadManager>.Instance;
-            var filename = Path.GetFileName(directory);
-            var guid = GenerateID(filename);
             instance.call("RegisterAssetPack", new object[] { guid, directory });
             typeof(AssetDb)
                 .GetMethod("LoadAssetPack", BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic)

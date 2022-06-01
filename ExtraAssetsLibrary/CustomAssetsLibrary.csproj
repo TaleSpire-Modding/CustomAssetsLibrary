@@ -46,7 +46,6 @@
     <Compile Include="DTO\Index.cs" />
     <Compile Include="DTO\MusicData.cs" />
     <Compile Include="DTO\PlaceableData.cs" />
-    <Compile Include="Patches\PathCombine.cs" />
     <Compile Include="Tests\DTO\AssetPackTest.cs" />
     <Compile Include="Tests\DTO\AssetLoaderTest.cs" />
     <Compile Include="Tests\DTO\CreatureTest.cs" />

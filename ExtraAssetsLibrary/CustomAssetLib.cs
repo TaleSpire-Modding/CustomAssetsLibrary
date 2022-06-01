@@ -27,7 +27,7 @@ namespace CustomAssetsLibrary
     {
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetLib";
-        public const string Version = "0.10.0.0";
+        public const string Version = "1.0.0.0";
         private const string Name = "Plugin Masters' Custom Asset Library";
 
         internal static ConfigEntry<bool> AutoClear { get; set; }
