@@ -19,10 +19,8 @@ using Unity.Entities;
 using CreatureData = Bounce.TaleSpire.AssetManagement.CreatureData;
 
 // ReSharper disable once CheckNamespace
-namespace ExtraAssetsLibrary.Patches
+namespace CustomAssetsLibrary.Patches
 {
-    
-
     [HarmonyPatch(typeof(AssetDb), "OnInstanceSetup")]
     public class AssetDbOnSetupInternalsPatch
     {

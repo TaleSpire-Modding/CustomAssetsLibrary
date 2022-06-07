@@ -4,7 +4,7 @@ using BepInEx.Configuration;
 using Bounce.Unmanaged;
 using CustomAssetsLibrary.DTO;
 using CustomAssetsLibrary.Tests;
-using ExtraAssetsLibrary.Patches;
+using CustomAssetsLibrary.Patches;
 using HarmonyLib;
 using Unity.Entities;
 using Unity.Entities.Serialization;

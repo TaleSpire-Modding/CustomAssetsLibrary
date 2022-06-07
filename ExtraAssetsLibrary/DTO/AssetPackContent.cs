@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Bounce.BlobAssets;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
-using Moq;
 using Newtonsoft.Json;
 using Unity.Collections;
 using Unity.Entities;
@@ -182,8 +180,16 @@ namespace CustomAssetsLibrary.DTO
                     isDeprecated = creature.IsDeprecated,
                     isGmOnly = false,
                     group = creature.GroupTag,
-                    baseRadius = 0.6f,
-                    baseLoaderData = CreatureData.DefaultBase,
+                    baseRadius = 0.5f,
+                    baseLoaderData = new AssetLoaderData
+                    {
+                        assetName = creature.BaseAsset.LoaderData.AssetName,
+                        assetPackId = CreatureData.DefaultBase.assetPackId,
+                        position = VectorFromString(creature.BaseAsset.Position),
+                        scale = VectorFromString(creature.BaseAsset.Scale),
+                        path = creature.BaseAsset.LoaderData.BundleId,
+                        rotation = RotationFromString(creature.BaseAsset.Rotation)
+                    },
                     modelLoaderData = new AssetLoaderData
                     {
                         assetName = creature.MiniAsset.LoaderData.AssetName,
@@ -196,7 +202,7 @@ namespace CustomAssetsLibrary.DTO
                     dbGroupTag = new DbGroupTag
                     {
                         Order = 0,
-                        Name = creature.GroupTag
+                        Name = creature.Tags.Count > 0 ? creature.Tags[0] : creature.GroupTag
                     },
                     name = creature.Name,
                     description = creature.Name,
@@ -204,9 +210,9 @@ namespace CustomAssetsLibrary.DTO
                     headPos = float3.zero,
                     hitPos = float3.zero,
                     torchPos = float3.zero,
-                    baseCylinderBounds = new CreatureCylinderBounds(new float3(0,0,0), 1, 0.6f),
+                    baseCylinderBounds = new CreatureCylinderBounds(new float3(0,0,0), 1, 0.5f),
                     creatureBounds = new Bounds(),
-                    modelCylinderBounds = new CreatureCylinderBounds(new float3(0, 0, 0), 1, 0.6f),
+                    modelCylinderBounds = new CreatureCylinderBounds(new float3(0, 0, 0), 1, 0.5f),
                     height = 1,
                     iconInfo = (creature.Icon.AtlasIndex,creature.Icon.Region.ToRegion),
                     tags = creature.Tags
