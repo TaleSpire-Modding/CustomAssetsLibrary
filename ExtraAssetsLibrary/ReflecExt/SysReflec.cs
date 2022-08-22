@@ -7,9 +7,8 @@ namespace CustomAssetsLibrary.ReflecExt
     {
         public static object call(this object o, string methodName, params object[] args)
         {
-            var mi = o.GetType().GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
-            if (mi != null) return mi.Invoke(o, args);
-            return null;
+            var mi = o.GetType().GetMethod(methodName, BindingFlags.Public| BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+            return mi?.Invoke( mi.IsStatic ? null : o, args);
         }
 
         public static object call<T>(this object o, string methodName, params object[] args)
@@ -22,7 +21,7 @@ namespace CustomAssetsLibrary.ReflecExt
         public static void call<T>(string methodName, params object[] args)
         {
             var myClassType = Assembly.GetExecutingAssembly().GetType(typeof(T).Namespace); 
-            myClassType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, args);
+            myClassType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(null, args);
         }
 
         public static I GetValue<T,I>(string methodName)

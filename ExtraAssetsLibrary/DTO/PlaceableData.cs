@@ -17,7 +17,7 @@ namespace CustomAssetsLibrary.DTO
         public string Name = "";
         public string Description = "";
         public string Group = "";
-        public DbGroupTag.Packed GroupTag;
+        public DbGroupTag GroupTag;
         public List<string> Tags = new List<string>();
         public PlaceableKind Kind = PlaceableKind.Tile;
         public bool IsGmOnly;
@@ -33,7 +33,7 @@ namespace CustomAssetsLibrary.DTO
         internal void ToBRPlaceableData(BlobBuilder builder, ref Bounce.TaleSpire.AssetManagement.PlaceableData placeable)
         {
             placeable.OrientationOffset = OrientationOffset;
-            placeable.Id = Id;
+            placeable.Id = new BoardAssetGuid(Id);
             placeable.IsGmOnly = IsGmOnly;
             placeable.IsDeprecated = IsDeprecated;
             builder.AllocateString(ref placeable.Name, Name);
@@ -49,9 +49,12 @@ namespace CustomAssetsLibrary.DTO
                 colliderArray[i] = Colliders[i];
             }
 
-            builder.ConstructStringArray(ref placeable.Tags, Tags.ToArray());
-            var blobBuilderArray = builder.Allocate(ref placeable.Assets, Assets.Count);
+            if (Tags == null)
+                placeable.Tags = new BlobArray<BlobString>();
+            else
+                builder.ConstructStringArray(ref placeable.Tags, Tags.ToArray());
 
+            var blobBuilderArray = builder.Allocate(ref placeable.Assets, Assets.Count);
             for (int i = 0; i < Assets.Count; i++)
             {
                 Assets[i].Pack(builder, ref blobBuilderArray[i]);
@@ -62,7 +65,10 @@ namespace CustomAssetsLibrary.DTO
             placeable.IconAtlasIndex = IconAtlasIndex;
             placeable.IconAtlasRegion = IconAtlasRegion;
             placeable.Kind = Kind;
-            placeable.GroupTag.Value = GroupTag;
+
+            ref var local1 = ref builder.Allocate(ref placeable.GroupTag);
+            builder.AllocateString(ref local1.Name, GroupTag.Name);
+            local1.Order = GroupTag.Order;
         }
 
         private static void ConstructEmptyScript(

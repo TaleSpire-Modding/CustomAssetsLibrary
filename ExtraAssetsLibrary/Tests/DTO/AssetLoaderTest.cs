@@ -9,8 +9,6 @@ namespace CustomAssetsLibrary.Tests
         [Test]
         public void NewTestScriptSimplePasses()
         {
-            string path;
-            
             // Use the Assert class to test conditions
         }
 

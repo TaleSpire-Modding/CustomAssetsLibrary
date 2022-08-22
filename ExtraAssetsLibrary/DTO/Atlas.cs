@@ -1,5 +1,4 @@
-﻿using Unity.Collections;
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Mathematics;
 
 namespace CustomAssetsLibrary.DTO
@@ -16,6 +15,13 @@ namespace CustomAssetsLibrary.DTO
             builder.AllocateString(ref output.LocalPath,LocalPath);
             output.Size = new int2(SizeX, SizeY);
             return output;
+        }
+
+        internal void ToBRAtlasData(BlobBuilder builder, ref Bounce.TaleSpire.AssetManagement.Atlas atlas)
+        {
+            builder.AllocateString(ref atlas.LocalPath, LocalPath);
+            atlas.Size.x = SizeX;
+            atlas.Size.y = SizeY;
         }
     }
 }

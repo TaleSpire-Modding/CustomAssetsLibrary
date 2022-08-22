@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BepInEx;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace CustomAssetsLibrary.DTO
@@ -24,8 +26,17 @@ namespace CustomAssetsLibrary.DTO
 
             public class BoundsType
             {
-                public string m_Center { get; set; } = "0,0,0";
-                public string m_Extent { get; set; } = "0,0,0";
+                public string m_Center { get; set; } = "0.5,0.5,0.5";
+                public string m_Extent { get; set; } = "1,1,1";
+
+                private float3 VectorFromString(string data)
+                {
+                    var x = data.Split(',').Select(s => s.Replace(",", "")).ToArray();
+                    return new float3(float.Parse(x[0]), float.Parse(x[1]), float.Parse(x[2]));
+                }
+
+                public Bounds ToBounds() => 
+                    new Bounds(VectorFromString(m_Center), VectorFromString(m_Extent));
             }
 
             public class RegionType
@@ -89,6 +100,7 @@ namespace CustomAssetsLibrary.DTO
             public class Index
             {
                 public string assetPackId { get; set; } = "";
+                public string Name = "Medieval Fantasy";
                 public List<TileAndPropsType> Tiles { get; set; } = new List<TileAndPropsType>();
                 public List<TileAndPropsType> Props { get; set; } = new List<TileAndPropsType>();
                 public List<CreatureType> Creatures { get; set; } = new List<CreatureType>();

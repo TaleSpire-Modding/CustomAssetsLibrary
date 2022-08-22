@@ -2,8 +2,6 @@
 using Bounce.BlobAssets;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
-using Moq;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
@@ -88,7 +86,7 @@ namespace CustomAssetsLibrary.DTO
       Bounds creatureBounds,
       (int, Rect) iconInfo)
         {
-            creature.Id = id;
+            creature.Id = new BoardAssetGuid(id);
             builder.AllocateString(ref creature.Name, name);
             builder.AllocateString(ref creature.Description, description);
             builder.AllocateString(ref creature.Group, group);

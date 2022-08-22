@@ -13,6 +13,7 @@ namespace CustomAssetsLibrary.DTO
 {
     public class AssetPackContent
     {
+        public string Name = "Medieval Fantasy";
         public List<PlaceableData> Placeable = new List<PlaceableData>();
         public List<CreatureData> Creatures = new List<CreatureData>();
         public List<Atlas> Atlases = new List<Atlas>();
@@ -35,13 +36,16 @@ namespace CustomAssetsLibrary.DTO
                 Creatures[i].ToBRCreatureData(builder, ref creatures[i]);
             }
 
-            var atlases = builder.Construct(ref blobAsset.Atlases, Atlases.Select(c => c.ToBRAtlas(builder)).ToArray());
+            var atlases = builder.Allocate(ref blobAsset.Atlases, Atlases.Count);
             for (int i = 0; i < atlases.Length; i++)
             {
-                builder.AllocateString(ref atlases[i].LocalPath, Atlases[i].LocalPath);
+                Atlases[i].ToBRAtlasData(builder, ref atlases[i]);
             }
 
             builder.Construct(ref blobAsset.Music, Music.Select(c => c.ToBRMusic(builder)).ToArray());
+
+            builder.AllocateString(ref blobAsset.Name, Name);
+
             var api = builder.CreateBlobAssetReference<AssetPackIndex>(Allocator.Persistent);
             builder.Dispose();
             return api;
@@ -51,6 +55,7 @@ namespace CustomAssetsLibrary.DTO
         {
             string text = File.ReadAllText(Path.Combine(path,"index.json"));
             var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            if (string.IsNullOrWhiteSpace(index.Name)) index.Name = "Medieval Fantasy";
             LoadFromIndex(index);
         }
 
@@ -69,6 +74,7 @@ namespace CustomAssetsLibrary.DTO
         private void LoadFromIndex(CustomAssetsPlugin.Data.Index index)
         {
             var assetPackId = new NGuid(index.assetPackId);
+            Name = index.Name;
             Debug.Log($"asset pack being loaded:{assetPackId}");
 
             Debug.Log($"Loading Atlas packs");
@@ -113,12 +119,20 @@ namespace CustomAssetsLibrary.DTO
                     Description = tile.Name,
                     Name = tile.Name,
                     Group = tile.GroupTag,
+                    GroupTag = new DbGroupTag
+                    {
+                        Order = 0,
+                        Name = tile.Tags.Count > 0 ? tile.Tags[0] : tile.GroupTag
+                    },
                     Tags = tile.Tags,
                     IconAtlasIndex = tile.Icon.AtlasIndex,
                     IconAtlasRegion = tile.Icon.Region.ToRegion,
                     IsGmOnly = false,
                     Kind = PlaceableKind.Tile,
                     OrientationOffset = 0,
+                    TotalVisualBounds = tile.ColliderBoundsBound.ToBounds(),
+                    ColliderBoundsBound = tile.ColliderBoundsBound.ToBounds(),
+                    Colliders = new List<Bounds>{ tile.ColliderBoundsBound.ToBounds() }
                 };
                 foreach (var tileAsset in tile.Assets)
                 {
@@ -147,12 +161,20 @@ namespace CustomAssetsLibrary.DTO
                     Description = prop.Name,
                     Name = prop.Name,
                     Group = prop.GroupTag,
+                    GroupTag = new DbGroupTag
+                    {
+                        Order = 0,
+                        Name = prop.Tags.Count > 0 ? prop.Tags[0] : prop.GroupTag
+                    },
                     Tags = prop.Tags,
                     IconAtlasIndex = prop.Icon.AtlasIndex,
                     IconAtlasRegion = prop.Icon.Region.ToRegion,
                     IsGmOnly = false,
                     Kind = PlaceableKind.Prop,
                     OrientationOffset = 0,
+                    TotalVisualBounds = prop.ColliderBoundsBound.ToBounds(),
+                    ColliderBoundsBound = prop.ColliderBoundsBound.ToBounds(),
+                    Colliders = new List<Bounds> { prop.ColliderBoundsBound.ToBounds() },
                 };
                 foreach (var propAsset in prop.Assets)
                 {

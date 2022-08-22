@@ -27,7 +27,7 @@ namespace CustomAssetsLibrary
     {
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetLib";
-        public const string Version = "1.0.0.0";
+        public const string Version = "1.1.0.0";
         private const string Name = "Plugin Masters' Custom Asset Library";
 
         internal static ConfigEntry<bool> AutoClear { get; set; }
@@ -45,7 +45,7 @@ namespace CustomAssetsLibrary
         public static void UnPatch()
         {
             harmony.UnpatchSelf();
-            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Patched.");
+            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Unpatched.");
         }
 
         public static void RunTests()
@@ -76,7 +76,7 @@ namespace CustomAssetsLibrary
         {
             DoConfig(Config);
             DoPatching();
-            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Extra Asset Library Plugin:{Name} is Active."); 
+            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Custom Asset Library Plugin:{Name} is Active."); 
             // if (RunTestsConfig.Value) RunTests();
         }
 
@@ -85,7 +85,7 @@ namespace CustomAssetsLibrary
         {
             var pack = new AssetPackContent();
             pack.FromJson(directory);
-            Debug.Log($"Added {Path.Combine(directory, "index")}");
+            if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Added {Path.Combine(directory, "index")}");
             WritePack(directory, pack);
         }
 

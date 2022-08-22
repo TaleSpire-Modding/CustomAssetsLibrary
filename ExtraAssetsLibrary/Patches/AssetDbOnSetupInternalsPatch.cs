@@ -1,37 +1,58 @@
 ﻿using System.IO;
 using System;
-using System.Collections.Generic;
 using System.Text;
 using Bounce.Singletons;
 using Bounce.Unmanaged;
 using HarmonyLib;
 using MD5 = System.Security.Cryptography.MD5;
 using UnityEngine;
-using System.Reflection;
-using Bounce.BlobAssets;
-using Bounce.TaleSpire.AssetManagement;
-using CustomAssetsLibrary;
 using CustomAssetsLibrary.DTO;
 using CustomAssetsLibrary.ReflecExt;
 using Newtonsoft.Json;
-using Unity.Collections;
-using Unity.Entities;
-using CreatureData = Bounce.TaleSpire.AssetManagement.CreatureData;
 
 // ReSharper disable once CheckNamespace
 namespace CustomAssetsLibrary.Patches
 {
-    [HarmonyPatch(typeof(AssetDb), "OnInstanceSetup")]
+    
+    [HarmonyPatch(typeof(AssetLoadManager), "DispatchAtlasLoads")]
+    public class UIAssetBrowserPatch
+    {
+        public static void Postfix(ref Texture2D[] __result)
+        {
+            if (CustomAssetLib.LogLevel.Value >= LogLevel.High)
+                Debug.Log($"Atlas Indexes Found: {__result.Length}");
+        }
+    }
+    
+
+    [HarmonyPatch(typeof(AssetLoadManager), "LoadInternalAssetPack")]
+    public class AssetDbLoadInternalAssetPackPatch
+    {
+        public static void Prefix(ref NGuid assetPackId, ref string packDir)
+        {
+            if (CustomAssetLib.LogLevel.Value >= LogLevel.High)
+                Debug.Log($"Started loading in {assetPackId} from {packDir}");
+        }
+
+        public static void Postfix(ref NGuid assetPackId, ref string packDir)
+        {
+            if (CustomAssetLib.LogLevel.Value >= LogLevel.High)
+                Debug.Log($"Loaded in {assetPackId} from {packDir}");
+        }
+    }
+
+    [HarmonyPatch(typeof(AssetLoadManager), "OnInstanceSetup")]
     public class AssetDbOnSetupInternalsPatch
     {
         private static string dirPlugin = BepInEx.Paths.PluginPath;
 
         public static bool HasSetup;
 
+
         /// <summary>
         /// Public for Testing only
         /// </summary>
-        public static void Postfix(NativeHashMap<NGuid, BlobView<CreatureData>> ____creatures)
+        public static void Postfix()
         {
            foreach (string directory in Directory.GetDirectories(dirPlugin))
                 // foreach (string subDirectory in Directory.GetDirectories(directory))
@@ -46,17 +67,20 @@ namespace CustomAssetsLibrary.Patches
         public static void LoadDirectory(string directory)
         {
             if (!File.Exists(Path.Combine(directory, "index.json"))) return; // Needs an index
-            Debug.Log($"Index found in: {directory}");
+            if (CustomAssetLib.LogLevel.Value >= LogLevel.Low)
+                Debug.Log($"Index found in: {directory}");
 
             string text = File.ReadAllText(Path.Combine(directory, "index.json"));
             var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
             var guid = new NGuid(index.assetPackId);
+            
             var instance = SimpleSingletonBehaviour<AssetLoadManager>.Instance;
-            instance.call("RegisterAssetPack", new object[] { guid, directory });
-            typeof(AssetDb)
-                .GetMethod("LoadAssetPack", BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic)
-                .Invoke(null, new object[] { guid, directory });
-            Debug.Log($"Pack {guid} Loaded");
+            
+            instance.call("LoadInternalAssetPack", new object[] { guid, directory });
+
+            if (CustomAssetLib.LogLevel.Value >= LogLevel.Low)
+                Debug.Log($"Pack {guid} Loaded");
+
         }
 
         /// <summary>
