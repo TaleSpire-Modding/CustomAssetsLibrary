@@ -3,7 +3,7 @@ using BepInEx.Configuration;
 using HarmonyLib;
 using UnityEngine;
 
-namespace CustomAssetsLoader
+namespace CustomAssetsKind
 {
     public enum LogLevel
     {
@@ -30,26 +30,26 @@ namespace CustomAssetsLoader
         {
             harmony = new Harmony(Guid);
             harmony.PatchAll();
-            if (LogLevel.Value > CustomAssetsLoader.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Patched.");
+            if (LogLevel.Value > CustomAssetsKind.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Patched.");
         }
 
         public static void UnPatch()
         {
             harmony.UnpatchSelf();
-            if (LogLevel.Value > CustomAssetsLoader.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Unpatched.");
+            if (LogLevel.Value > CustomAssetsKind.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Unpatched.");
         }
 
         public static void DoConfig(ConfigFile Config)
         {
-            LogLevel = Config.Bind("Logging", "Level", CustomAssetsLoader.LogLevel.Low);
-            if (LogLevel.Value > CustomAssetsLoader.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Config Bound.");
+            LogLevel = Config.Bind("Logging", "Level", CustomAssetsKind.LogLevel.Low);
+            if (LogLevel.Value > CustomAssetsKind.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Config Bound.");
         }
 
         private void Awake()
         {
             DoConfig(Config);
             DoPatching();
-            if (LogLevel.Value > CustomAssetsLoader.LogLevel.None) Debug.Log($"Custom Asset Library Plugin:{Name} is Active.");
+            if (LogLevel.Value > CustomAssetsKind.LogLevel.None) Debug.Log($"Custom Asset Library Plugin:{Name} is Active.");
         }
     }
 }

@@ -15,40 +15,10 @@ using CustomAssetsCompiler.CoreDTO;
 namespace CustomAssetsLibrary.Patches
 {
     
-    [HarmonyPatch(typeof(AssetLoadManager), "DispatchAtlasLoads")]
-    public class UIAssetBrowserPatch
-    {
-        public static void Postfix(ref Texture2D[] __result)
-        {
-            if (CustomAssetLoader.LogLevel.Value >= LogLevel.High)
-                Debug.Log($"Atlas Indexes Found: {__result.Length}");
-        }
-    }
-    
-
-    [HarmonyPatch(typeof(AssetLoadManager), "LoadInternalAssetPack")]
-    public class AssetDbLoadInternalAssetPackPatch
-    {
-        public static void Prefix(ref NGuid assetPackId, ref string packDir)
-        {
-            if (CustomAssetLoader.LogLevel.Value >= LogLevel.High)
-                Debug.Log($"Started loading in {assetPackId} from {packDir}");
-        }
-
-        public static void Postfix(ref NGuid assetPackId, ref string packDir)
-        {
-            if (CustomAssetLoader.LogLevel.Value >= LogLevel.High)
-                Debug.Log($"Loaded in {assetPackId} from {packDir}");
-        }
-    }
-
     [HarmonyPatch(typeof(AssetLoadManager), "OnInstanceSetup")]
     public class AssetDbOnSetupInternalsPatch
     {
         private static string dirPlugin = BepInEx.Paths.PluginPath;
-
-        public static bool HasSetup;
-
 
         /// <summary>
         /// Public for Testing only
@@ -56,9 +26,7 @@ namespace CustomAssetsLibrary.Patches
         public static void Postfix()
         {
            foreach (string directory in Directory.GetDirectories(dirPlugin))
-                // foreach (string subDirectory in Directory.GetDirectories(directory))
                     LoadDirectory(directory);
-           HasSetup = true;
         }
 
         /// <summary>

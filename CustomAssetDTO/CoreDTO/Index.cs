@@ -100,7 +100,7 @@ namespace CustomAssetsCompiler.CoreDTO
             public class Index
             {
                 public string assetPackId { get; set; } = "";
-                public string Name = "Medieval Fantasy";
+                public string Name { get; set; } = "Medieval Fantasy";
                 public List<TileAndPropsType> Tiles { get; set; } = new List<TileAndPropsType>();
                 public List<TileAndPropsType> Props { get; set; } = new List<TileAndPropsType>();
                 public List<CreatureType> Creatures { get; set; } = new List<CreatureType>();

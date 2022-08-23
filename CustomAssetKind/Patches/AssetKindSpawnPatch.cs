@@ -5,7 +5,6 @@ using Bounce.BlobAssets;
 using Bounce.Unmanaged;
 using HarmonyLib;
 using Unity.Collections;
-
 using CustomData = Bounce.TaleSpire.AssetManagement.CustomData;
 
 // ReSharper disable once CheckNamespace

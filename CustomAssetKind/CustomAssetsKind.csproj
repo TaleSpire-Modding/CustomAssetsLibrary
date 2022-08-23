@@ -41,12 +41,14 @@
   <ItemGroup>
     <Compile Include="Patches\AssetKindSpawnPatch.cs" />
     <Compile Include="CustomAssetKindPlugin.cs" />
+    <Compile Include="Patches\AssetLoadManagerPatch.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Singleton\CustomAssetDb.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -695,6 +697,7 @@
       <Name>CustomAssetDTO</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
