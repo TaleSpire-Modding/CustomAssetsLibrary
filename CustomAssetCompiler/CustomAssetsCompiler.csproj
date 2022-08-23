@@ -39,6 +39,7 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="TaleWeaverCompiler.cs" />
     <Compile Include="CustomAssetCompiler.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

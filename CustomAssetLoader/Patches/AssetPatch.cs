@@ -4,12 +4,12 @@ using System.Text;
 using Bounce.Singletons;
 using Bounce.Unmanaged;
 using CustomAssetsLoader;
-using CustomAssetsLoader.DTO;
 using CustomAssetsLoader.ReflecExt;
 using HarmonyLib;
 using MD5 = System.Security.Cryptography.MD5;
 using UnityEngine;
 using Newtonsoft.Json;
+using CustomAssetsCompiler.CoreDTO;
 
 // ReSharper disable once CheckNamespace
 namespace CustomAssetsLibrary.Patches

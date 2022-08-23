@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bounce.BlobAssets;
-using Bounce.Singletons;
-using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
-using CustomAssetsKind.DTO;
-using CustomAssetsLoader;
-using GameSequencer;
 using HarmonyLib;
 using Unity.Collections;
-using UnityEngine;
+
+using CustomData = Bounce.TaleSpire.AssetManagement.CustomData;
 
 // ReSharper disable once CheckNamespace
 namespace CustomAssetsLibrary.Patches

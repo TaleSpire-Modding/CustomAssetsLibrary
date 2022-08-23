@@ -9,16 +9,7 @@ using MD5 = System.Security.Cryptography.MD5;
 
 namespace CustomAssetsCompiler
 {
-    public enum LogLevel
-    {
-        None,
-        Low,
-        Medium,
-        High,
-        All,
-    }
-
-    public class CustomAssetCompiler
+    public class TaleWeaverCompiler
     {
         public const string Version = "1.0.0.0";
         
@@ -33,8 +24,8 @@ namespace CustomAssetsCompiler
 
         public static void WritePack(string directory, AssetPackContent content)
         { 
-            var blobref = content.GenerateCustomBlobAssetReference();
-            var indexDestinationLocation = Path.Combine(directory, "customIndex");
+            var blobref = content.GenerateBlobAssetReference();
+            var indexDestinationLocation = Path.Combine(directory, "index");
             var writer = new StreamBinaryWriter(indexDestinationLocation);
             writer.Write(blobref);
         }

@@ -54,14 +54,14 @@ namespace CustomAssetsCompiler.CoreDTO
             return api;
         }
 
-        public BlobAssetReference<AssetPackIndex> GenerateCustomBlobAssetReference()
+        public BlobAssetReference<CustomPackIndex> GenerateCustomBlobAssetReference()
         {
             var builder = new BlobBuilder(Allocator.Temp);
-            ref var blobAsset = ref builder.ConstructRoot<AssetPackIndex>();
+            ref var blobAsset = ref builder.ConstructRoot<CustomPackIndex>();
 
             // Build onto
 
-            var api = builder.CreateBlobAssetReference<AssetPackIndex>(Allocator.Persistent);
+            var api = builder.CreateBlobAssetReference<CustomPackIndex>(Allocator.Persistent);
             builder.Dispose();
             return api;
         }
