@@ -23,8 +23,6 @@ namespace CustomAssetsLoader
         public const string Version = "1.1.0.0";
         private const string Name = "Plugin Masters' Custom Asset Kind";
 
-        internal static ConfigEntry<bool> AutoClear { get; set; }
-        internal static ConfigEntry<bool> RunTestsConfig { get; set; }
         internal static ConfigEntry<LogLevel> LogLevel { get; set; }
         internal static Harmony harmony;
 
@@ -43,9 +41,7 @@ namespace CustomAssetsLoader
 
         public static void DoConfig(ConfigFile Config)
         {
-            AutoClear = Config.Bind("Mini Loading", "Auto Clear Failed Minis", false);
             LogLevel = Config.Bind("Logging", "Level", CustomAssetsLoader.LogLevel.Low);
-            RunTestsConfig = Config.Bind("Tests", "Execute", false);
             if (LogLevel.Value > CustomAssetsLoader.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Config Bound.");
         }
 

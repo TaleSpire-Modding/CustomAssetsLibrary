@@ -39,13 +39,13 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DTO\AssetLoaderData.cs" />
-    <Compile Include="DTO\AssetPackContent.cs" />
-    <Compile Include="DTO\Atlas.cs" />
-    <Compile Include="DTO\CreatureData.cs" />
-    <Compile Include="DTO\Index.cs" />
-    <Compile Include="DTO\MusicData.cs" />
-    <Compile Include="DTO\PlaceableData.cs" />
+    <Compile Include="CoreDTO\AssetLoaderData.cs" />
+    <Compile Include="CoreDTO\AssetPackContent.cs" />
+    <Compile Include="CoreDTO\Atlas.cs" />
+    <Compile Include="CoreDTO\CreatureData.cs" />
+    <Compile Include="CoreDTO\Index.cs" />
+    <Compile Include="CoreDTO\MusicData.cs" />
+    <Compile Include="CoreDTO\PlaceableData.cs" />
     <Compile Include="CustomAssetCompiler.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -695,7 +695,9 @@
       <HintPath>..\packages\NUnit.3.13.3\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CAKDTO\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

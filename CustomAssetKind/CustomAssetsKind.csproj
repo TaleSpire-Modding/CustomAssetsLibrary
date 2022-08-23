@@ -39,7 +39,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Patches\AssetKindPatch.cs" />
+    <Compile Include="DTO\CustomData.cs" />
+    <Compile Include="Patches\AssetKindSpawnPatch.cs" />
     <Compile Include="CustomAssetKindPlugin.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
