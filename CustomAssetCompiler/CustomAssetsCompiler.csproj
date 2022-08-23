@@ -39,13 +39,6 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CoreDTO\AssetLoaderData.cs" />
-    <Compile Include="CoreDTO\AssetPackContent.cs" />
-    <Compile Include="CoreDTO\Atlas.cs" />
-    <Compile Include="CoreDTO\CreatureData.cs" />
-    <Compile Include="CoreDTO\Index.cs" />
-    <Compile Include="CoreDTO\MusicData.cs" />
-    <Compile Include="CoreDTO\PlaceableData.cs" />
     <Compile Include="CustomAssetCompiler.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -695,8 +688,12 @@
       <HintPath>..\packages\NUnit.3.13.3\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="CAKDTO\" />
+    <ProjectReference Include="..\CustomAssetDTO\CustomAssetDTO.csproj">
+      <Project>{91377d89-5e40-477d-b7e1-c0df931b7d7d}</Project>
+      <Name>CustomAssetDTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

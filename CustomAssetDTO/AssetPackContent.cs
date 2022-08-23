@@ -9,7 +9,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-using CustomData = Bounce.TaleSpire.AssetManagement.CustomData;
+using CustomCategories = Bounce.TaleSpire.AssetManagement.CustomCategories;
 
 namespace CustomAssetsCompiler.CoreDTO
 {
@@ -22,7 +22,7 @@ namespace CustomAssetsCompiler.CoreDTO
         public List<MusicData> Music = new List<MusicData>();
         public List<CustomCategories> Custom = new List<CustomCategories>();
 
-        internal BlobAssetReference<AssetPackIndex> GenerateBlobAssetReference()
+        public BlobAssetReference<AssetPackIndex> GenerateBlobAssetReference()
         {
             var builder = new BlobBuilder(Allocator.Temp);
             ref var blobAsset = ref builder.ConstructRoot<AssetPackIndex>();
@@ -54,7 +54,7 @@ namespace CustomAssetsCompiler.CoreDTO
             return api;
         }
 
-        internal BlobAssetReference<AssetPackIndex> GenerateCustomBlobAssetReference()
+        public BlobAssetReference<AssetPackIndex> GenerateCustomBlobAssetReference()
         {
             var builder = new BlobBuilder(Allocator.Temp);
             ref var blobAsset = ref builder.ConstructRoot<AssetPackIndex>();
