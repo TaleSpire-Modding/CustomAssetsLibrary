@@ -20,7 +20,7 @@ namespace CustomAssetsKind
     {
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetKindPlugin";
-        public const string Version = "1.1.0.0";
+        public const string Version = "1.0.0.0";
         private const string Name = "Plugin Masters' Custom Asset Kind";
 
         internal static ConfigEntry<LogLevel> LogLevel { get; set; }
