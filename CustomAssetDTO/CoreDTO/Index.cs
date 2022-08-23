@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BepInEx;
+using Bounce.TaleSpire.AssetManagement;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -106,6 +107,7 @@ namespace CustomAssetsCompiler.CoreDTO
                 public List<CreatureType> Creatures { get; set; } = new List<CreatureType>();
                 public List<MusicType> Music { get; set; } = new List<MusicType>();
                 public List<IconsAtlasesType> IconsAtlas { get; set; } = new List<IconsAtlasesType>();
+                public List<CustomKinds> Custom = new List<CustomKinds>();
             }
         }
     }

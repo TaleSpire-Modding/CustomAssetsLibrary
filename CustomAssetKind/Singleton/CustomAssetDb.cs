@@ -13,11 +13,11 @@ namespace CustomAssetsKind.Singleton
 {
     public class CustomAssetDb : SimpleSingletonBehaviour<CustomAssetDb>
     {
-        private static readonly Dictionary<NGuid, AssetPack> _assetPacks = new Dictionary<NGuid, AssetPack>(8);
+        // private static readonly Dictionary<NGuid, AssetPack> _assetPacks = new Dictionary<NGuid, AssetPack>(8);
 
         private static NativeHashMap<BoardAssetGuid, BlobView<CreatureData>> _creatures;
-        private static readonly BList<DbGroupImpl> _creatureGroups = new BList<DbGroupImpl>(128);
-        private static readonly TagCollection _creatureTags = new TagCollection(128);
+        // private static readonly BList<DbGroupImpl> _creatureGroups = new BList<DbGroupImpl>(128);
+        // private static readonly TagCollection _creatureTags = new TagCollection(128);
 
 
         private static readonly List<Texture2D> _atlases = new List<Texture2D>(10);
@@ -29,7 +29,7 @@ namespace CustomAssetsKind.Singleton
             BuiltIn,
             External,
         }
-
+        /*
         private class AssetPack
         {
             public readonly NGuid Id;
@@ -299,5 +299,7 @@ namespace CustomAssetsKind.Singleton
                 public RefPair Relocate(int index) => new RefPair(index, RefCount);
             }
         }
+    
+        */
     }
 }

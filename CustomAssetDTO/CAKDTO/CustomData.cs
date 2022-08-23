@@ -7,7 +7,7 @@ using AssetLoaderData = CustomAssetsCompiler.CoreDTO.AssetLoaderData;
 
 namespace Bounce.TaleSpire.AssetManagement
 {
-    public struct CustomCategories
+    public struct CustomKinds
     {
         public BlobString Kind;
         public BlobString Catagory;
@@ -33,7 +33,7 @@ namespace Bounce.TaleSpire.AssetManagement
 
 namespace CustomAssetsKind.DTO
 {
-    public class CustomCategories
+    public class CustomKinds
     {
         public string Kind;
         public string Catagory;

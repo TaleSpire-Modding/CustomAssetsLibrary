@@ -9,7 +9,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-using CustomCategories = Bounce.TaleSpire.AssetManagement.CustomCategories;
+using CustomCategories = Bounce.TaleSpire.AssetManagement.CustomKinds;
 
 namespace CustomAssetsCompiler.CoreDTO
 {
