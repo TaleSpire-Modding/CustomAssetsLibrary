@@ -5,11 +5,11 @@ using CustomAssetsCompiler;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CustomAssetCompiler")]
+[assembly: AssemblyTitle("CustomAssetDTO")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("TaleSpire Modding Community")]
-[assembly: AssemblyProduct("CustomAssetCompiler")]
+[assembly: AssemblyProduct("CustomAssetDTO")]
 [assembly: AssemblyCopyright("Copyright © 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
