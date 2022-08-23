@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using Bounce.Unmanaged;
-using CustomAssetsCompiler.DTO;
+using CustomAssetsCompiler.CoreDTO;
 using Unity.Entities;
 using Unity.Entities.Serialization;
 using UnityEngine;

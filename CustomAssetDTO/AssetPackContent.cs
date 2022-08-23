@@ -3,11 +3,13 @@ using System.IO;
 using System.Linq;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
+using CustomAssetsKind.DTO;
 using Newtonsoft.Json;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
+using CustomData = Bounce.TaleSpire.AssetManagement.CustomData;
 
 namespace CustomAssetsCompiler.CoreDTO
 {
@@ -18,6 +20,7 @@ namespace CustomAssetsCompiler.CoreDTO
         public List<CreatureData> Creatures = new List<CreatureData>();
         public List<Atlas> Atlases = new List<Atlas>();
         public List<MusicData> Music = new List<MusicData>();
+        public List<CustomCategories> Custom = new List<CustomCategories>();
 
         internal BlobAssetReference<AssetPackIndex> GenerateBlobAssetReference()
         {
@@ -45,6 +48,18 @@ namespace CustomAssetsCompiler.CoreDTO
             builder.Construct(ref blobAsset.Music, Music.Select(c => c.ToBRMusic(builder)).ToArray());
 
             builder.AllocateString(ref blobAsset.Name, Name);
+
+            var api = builder.CreateBlobAssetReference<AssetPackIndex>(Allocator.Persistent);
+            builder.Dispose();
+            return api;
+        }
+
+        internal BlobAssetReference<AssetPackIndex> GenerateCustomBlobAssetReference()
+        {
+            var builder = new BlobBuilder(Allocator.Temp);
+            ref var blobAsset = ref builder.ConstructRoot<AssetPackIndex>();
+
+            // Build onto
 
             var api = builder.CreateBlobAssetReference<AssetPackIndex>(Allocator.Persistent);
             builder.Dispose();
