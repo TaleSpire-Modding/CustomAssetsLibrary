@@ -8,6 +8,7 @@ using MD5 = System.Security.Cryptography.MD5;
 using UnityEngine;
 using CustomAssetsLibrary.DTO;
 using CustomAssetsLibrary.ReflecExt;
+using LordAshes;
 using Newtonsoft.Json;
 
 // ReSharper disable once CheckNamespace
@@ -71,7 +72,7 @@ namespace CustomAssetsLibrary.Patches
                 Debug.Log($"Index found in: {directory}");
 
             string text = File.ReadAllText(Path.Combine(directory, "index.json"));
-            var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            var index = SmartJsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
             var guid = new NGuid(index.assetPackId);
             
             var instance = SimpleSingletonBehaviour<AssetLoadManager>.Instance;
