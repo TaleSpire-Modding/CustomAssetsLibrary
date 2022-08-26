@@ -3,13 +3,13 @@ using System.IO;
 using System.Linq;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
-using CustomAssetsKind.DTO;
 using Newtonsoft.Json;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-using CustomCategories = Bounce.TaleSpire.AssetManagement.CustomKinds;
+using CustomData = CustomAssetsKind.DTO.CustomData;
+using CustomKinds = CustomAssetsKind.DTO.CustomKinds;
 
 namespace CustomAssetsCompiler.CoreDTO
 {
@@ -20,7 +20,7 @@ namespace CustomAssetsCompiler.CoreDTO
         public List<CreatureData> Creatures = new List<CreatureData>();
         public List<Atlas> Atlases = new List<Atlas>();
         public List<MusicData> Music = new List<MusicData>();
-        public List<CustomCategories> Custom = new List<CustomCategories>();
+        public List<CustomKinds> Custom = new List<CustomKinds>();
 
         public BlobAssetReference<AssetPackIndex> GenerateBlobAssetReference()
         {
@@ -256,6 +256,29 @@ namespace CustomAssetsCompiler.CoreDTO
                 };
                 Creatures.Add(creatureData);
                 Debug.Log($"Loaded {creature.Name} creature into APC");
+            }
+
+            foreach (var custom in index.Custom)
+            {
+                var customData = new CustomAssetsKind.DTO.CustomKinds
+                {
+                    Kind = custom.Kind,
+                    Catagory = custom.Catagory,
+                    Entries = new List<CustomData>()
+                };
+
+                foreach (var entry in custom.Entries)
+                {
+                    customData.Entries.Add(new CustomData
+                    {
+                        ModelAsset = new AssetLoaderData()
+                        {
+                            
+                        }
+                    });
+                }
+
+                Custom.Add(customData);
             }
         }
     }

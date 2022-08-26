@@ -15,7 +15,9 @@ namespace CustomAssetsKind.Singleton
     {
         // private static readonly Dictionary<NGuid, AssetPack> _assetPacks = new Dictionary<NGuid, AssetPack>(8);
 
-        private static NativeHashMap<BoardAssetGuid, BlobView<CreatureData>> _creatures;
+        internal static Dictionary<string, Action<CustomData>> SpawnTool = new Dictionary<string, Action<CustomData>>();
+        internal static Dictionary<string, NativeHashMap<BoardAssetGuid, BlobView<CustomData>>> CustomAssets = new Dictionary<string, NativeHashMap<BoardAssetGuid, BlobView<CustomData>>>();
+
         // private static readonly BList<DbGroupImpl> _creatureGroups = new BList<DbGroupImpl>(128);
         // private static readonly TagCollection _creatureTags = new TagCollection(128);
 

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Bounce.BlobAssets;
+﻿using System.Linq;
 using Bounce.Unmanaged;
+using CustomAssetsKind.Singleton;
 using HarmonyLib;
-using Unity.Collections;
-using CustomData = Bounce.TaleSpire.AssetManagement.CustomData;
+
 
 // ReSharper disable once CheckNamespace
 namespace CustomAssetsLibrary.Patches
@@ -13,9 +10,6 @@ namespace CustomAssetsLibrary.Patches
     [HarmonyPatch(typeof(AssetSpawnFromTool), "SpawnUsingTool")]
     public class AssetSpawnFromToolSpawnUsingToolPatch
     {
-        internal static Dictionary<string, Action<CustomData>> SpawnTool = new Dictionary<string, Action<CustomData>>();
-        internal static Dictionary<string, NativeHashMap<BoardAssetGuid, BlobView<CustomData>>> AssetDb = new Dictionary<string, NativeHashMap<BoardAssetGuid, BlobView<CustomData>>>();
-
         public static void Postfix(ref NGuid nGuid)
         {
             if (!AssetSpawnFromToolCheckPatch.assetFound)
@@ -23,12 +17,11 @@ namespace CustomAssetsLibrary.Patches
                 var boardAssetGuid = new BoardAssetGuid(nGuid);
                 var found = false;
 
-                foreach (var entry in AssetDb.AsParallel())
+                foreach (var entry in CustomAssetDb.CustomAssets.AsParallel())
                 {
-                    if (found || !entry.Value.TryGetValue(boardAssetGuid, out var data)) continue;
+                    if (found || !entry.Value.TryGetValue(boardAssetGuid, out var data) && data.IsCreated) continue;
                     found = true;
-                    if (data.IsCreated)
-                        SpawnTool[entry.Key](data.Value);
+                    CustomAssetDb.SpawnTool[entry.Key](data.Value);
                 }
             }
             AssetSpawnFromToolCheckPatch.assetFound = false;

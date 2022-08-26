@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BepInEx;
-using Bounce.TaleSpire.AssetManagement;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -96,6 +95,28 @@ namespace CustomAssetsCompiler.CoreDTO
             public class IconsAtlasesType
             {
                 public string Path { get; set; } = "";
+            }
+
+            public class CustomKinds
+            {
+                public string Kind;
+                public string Catagory;
+                public List<CustomKind> Entries = new List<CustomKind>();
+            }
+
+            public class CustomKind
+            {
+                public string Id;
+                public string Name;
+                public string Description;
+                public string Group;
+                public string GroupTag;
+                public List<string> Tags;
+                public bool IsGmOnly;
+                public bool IsDeprecated;
+                public List<AssetType> Asset;
+                public IconType Icon;
+                public string OtherSerializedData;
             }
 
             public class Index
