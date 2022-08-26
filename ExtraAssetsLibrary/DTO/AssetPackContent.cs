@@ -64,13 +64,24 @@ namespace CustomAssetsLibrary.DTO
         private float3 VectorFromString(string data)
         {
             var x = data.Split(',').Select(s => s.Replace(",","")).ToArray();
-            return new float3(float.Parse(x[0]), float.Parse(x[1]), float.Parse(x[2]));
+            if (x.Length >= 6)
+                return new float3(
+                    UsingLocalNumbers.ParseFloat($"{x[0]}.{x[1]}"), 
+                    UsingLocalNumbers.ParseFloat($"{x[2]}.{x[3]}"), 
+                    UsingLocalNumbers.ParseFloat($"{x[4]}.{x[5]}"));
+            return new float3(UsingLocalNumbers.ParseFloat(x[0]), UsingLocalNumbers.ParseFloat(x[1]), UsingLocalNumbers.ParseFloat(x[2]));
         }
 
         private quaternion RotationFromString(string data)
         {
             var x = data.Split(',').Select(s => s.Replace(",", "")).ToArray();
-            return new quaternion(float.Parse(x[0]), float.Parse(x[1]), float.Parse(x[2]),0f);
+            if (x.Length >= 6)
+                return new quaternion(
+                    UsingLocalNumbers.ParseFloat($"{x[0]}.{x[1]}"),
+                    UsingLocalNumbers.ParseFloat($"{x[2]}.{x[3]}"),
+                    UsingLocalNumbers.ParseFloat($"{x[4]}.{x[5]}"),
+                    0);
+            return new quaternion(UsingLocalNumbers.ParseFloat(x[0]), UsingLocalNumbers.ParseFloat(x[1]), UsingLocalNumbers.ParseFloat(x[2]), 0);
         }
 
         private void LoadFromIndex(CustomAssetsPlugin.Data.Index index)
