@@ -4,7 +4,6 @@ using System.Linq;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
 using LordAshes;
-using Newtonsoft.Json;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -56,7 +55,7 @@ namespace CustomAssetsLibrary.DTO
         {
             var text = File.ReadAllText(Path.Combine(path,"index.json"));
 
-            var index = SmartJsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            var index = SmartConvert.Json.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
             if (string.IsNullOrWhiteSpace(index.Name)) index.Name = "Medieval Fantasy";
             LoadFromIndex(index);
         }
@@ -66,10 +65,10 @@ namespace CustomAssetsLibrary.DTO
             var x = data.Split(',').Select(s => s.Replace(",","")).ToArray();
             if (x.Length >= 6)
                 return new float3(
-                    UsingLocalNumbers.ParseFloat($"{x[0]}.{x[1]}"), 
-                    UsingLocalNumbers.ParseFloat($"{x[2]}.{x[3]}"), 
-                    UsingLocalNumbers.ParseFloat($"{x[4]}.{x[5]}"));
-            return new float3(UsingLocalNumbers.ParseFloat(x[0]), UsingLocalNumbers.ParseFloat(x[1]), UsingLocalNumbers.ParseFloat(x[2]));
+                    SmartConvert.ParseFloat($"{x[0]}.{x[1]}"), 
+                    SmartConvert.ParseFloat($"{x[2]}.{x[3]}"), 
+                    SmartConvert.ParseFloat($"{x[4]}.{x[5]}"));
+            return new float3(SmartConvert.ParseFloat(x[0]), SmartConvert.ParseFloat(x[1]), SmartConvert.ParseFloat(x[2]));
         }
 
         private quaternion RotationFromString(string data)
@@ -77,11 +76,11 @@ namespace CustomAssetsLibrary.DTO
             var x = data.Split(',').Select(s => s.Replace(",", "")).ToArray();
             if (x.Length >= 6)
                 return new quaternion(
-                    UsingLocalNumbers.ParseFloat($"{x[0]}.{x[1]}"),
-                    UsingLocalNumbers.ParseFloat($"{x[2]}.{x[3]}"),
-                    UsingLocalNumbers.ParseFloat($"{x[4]}.{x[5]}"),
+                    SmartConvert.ParseFloat($"{x[0]}.{x[1]}"),
+                    SmartConvert.ParseFloat($"{x[2]}.{x[3]}"),
+                    SmartConvert.ParseFloat($"{x[4]}.{x[5]}"),
                     0);
-            return new quaternion(UsingLocalNumbers.ParseFloat(x[0]), UsingLocalNumbers.ParseFloat(x[1]), UsingLocalNumbers.ParseFloat(x[2]), 0);
+            return new quaternion(SmartConvert.ParseFloat(x[0]), SmartConvert.ParseFloat(x[1]), SmartConvert.ParseFloat(x[2]), 0);
         }
 
         private void LoadFromIndex(CustomAssetsPlugin.Data.Index index)

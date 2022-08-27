@@ -6,6 +6,7 @@ using CustomAssetsLibrary.DTO;
 using CustomAssetsLibrary.Tests;
 using CustomAssetsLibrary.Patches;
 using HarmonyLib;
+using LordAshes;
 using Unity.Entities;
 using Unity.Entities.Serialization;
 using UnityEngine;
@@ -21,8 +22,8 @@ namespace CustomAssetsLibrary
         All,
     }
 
-
     [BepInPlugin(Guid, Name, Version)]
+    [BepInDependency(SmartConvert.Guid)]
     public class CustomAssetLib : BaseUnityPlugin
     {
         // constants
