@@ -70,7 +70,12 @@ namespace CustomAssetsCompiler.CoreDTO
         {
             string text = File.ReadAllText(Path.Combine(path,"index.json"));
             var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
-            if (string.IsNullOrWhiteSpace(index.Name)) index.Name = "Medieval Fantasy";
+
+            var name = Path.GetDirectoryName(path);
+            if (name != null && name.Contains("-"))
+                name = name.Substring(name.IndexOf("-")+1).Replace('_',' ');
+
+            if (string.IsNullOrWhiteSpace(index.Name)) index.Name = name;
             LoadFromIndex(index);
         }
 
