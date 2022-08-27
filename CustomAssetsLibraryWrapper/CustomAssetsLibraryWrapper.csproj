@@ -39,22 +39,6 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DTO\AssetLoaderData.cs" />
-    <Compile Include="DTO\AssetPackContent.cs" />
-    <Compile Include="DTO\Atlas.cs" />
-    <Compile Include="DTO\CreatureData.cs" />
-    <Compile Include="DTO\Index.cs" />
-    <Compile Include="DTO\MusicData.cs" />
-    <Compile Include="DTO\PlaceableData.cs" />
-    <Compile Include="Tests\DTO\AssetPackTest.cs" />
-    <Compile Include="Tests\DTO\AssetLoaderTest.cs" />
-    <Compile Include="Tests\DTO\CreatureTest.cs" />
-    <Compile Include="Tests\DTO\PlaceableTest.cs" />
-    <Compile Include="Tests\DTO\MusicTest.cs" />
-    <Compile Include="Tests\DTO\AtlasTest.cs" />
-    <Compile Include="Tests\DTO\IndexTest.cs" />
-    <Compile Include="ReflecExt\SysReflec.cs" />
-    <Compile Include="Patches\AssetDbOnSetupInternalsPatch.cs" />
     <Compile Include="CustomAssetLib.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -62,8 +46,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\ITest.cs" />
-    <Compile Include="Tests\Patches\AssetDbPatchTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -709,7 +691,12 @@
       <HintPath>..\..\..\..\..\..\AppData\Roaming\r2modmanPlus-local\TaleSpire\profiles\CMPDev\BepInEx\plugins\LordAshes-SmartConvertPlugin\SmartConvertPlugin.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CustomAssetCompiler\CustomAssetsCompiler.csproj">
+      <Project>{5604ac42-eee2-4dee-bdab-8286ece27248}</Project>
+      <Name>CustomAssetsCompiler</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
