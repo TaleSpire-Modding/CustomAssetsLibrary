@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using Bounce.Unmanaged;
 using CustomAssetsLibrary.Patches;
 using HarmonyLib;
+using LordAshes;
 using UnityEngine;
 
 namespace CustomAssetsLoader
@@ -18,6 +19,7 @@ namespace CustomAssetsLoader
 
 
     [BepInPlugin(Guid, Name, Version)]
+    [BepInDependency(SmartConvert.Guid)]
     public class CustomAssetLoader : BaseUnityPlugin
     {
         // constants

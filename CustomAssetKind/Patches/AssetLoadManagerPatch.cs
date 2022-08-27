@@ -3,6 +3,7 @@ using System.IO;
 using Bounce.Unmanaged;
 using CustomAssetsCompiler.CoreDTO;
 using HarmonyLib;
+using LordAshes;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -30,17 +31,17 @@ namespace CustomAssetsKind.Patches
         public static void LoadDirectory(string directory)
         {
             if (!File.Exists(Path.Combine(directory, "index.json")) || !File.Exists(Path.Combine(directory, "customIndex"))) return; // Needs a custom index
-            if (CustomAssetKindPlugin.LogLevel.Value >= LogLevel.Low)
+            if (CustomAssetKindPlugin.LogLevelConfig.Value >= LogLevel.Low)
                 Debug.Log($"Index found in: {directory}");
 
             string text = File.ReadAllText(Path.Combine(directory, "index.json"));
-            var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            var index = SmartConvert.Json.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
             var guid = new NGuid(index.assetPackId);
 
             // TODO
             // Handle loading of customPackIndex
             
-            if (CustomAssetKindPlugin.LogLevel.Value >= LogLevel.Low)
+            if (CustomAssetKindPlugin.LogLevelConfig.Value >= LogLevel.Low)
                 Debug.Log($"Pack {guid} Loaded");
         }
     }

@@ -1,21 +1,15 @@
-﻿using BepInEx;
+﻿using System;
+using BepInEx;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 using HarmonyLib;
-using UnityEngine;
+using LordAshes;
+using ModdingTales;
 
 namespace CustomAssetsKind
 {
-    public enum LogLevel
-    {
-        None,
-        Low,
-        Medium,
-        High,
-        All,
-    }
-
-
     [BepInPlugin(Guid, Name, Version)]
+    [BepInDependency(SmartConvert.Guid)]
     public class CustomAssetKindPlugin : BaseUnityPlugin
     {
         // constants
@@ -23,33 +17,51 @@ namespace CustomAssetsKind
         public const string Version = "1.0.0.0";
         private const string Name = "Plugin Masters' Custom Asset Kind";
 
-        internal static ConfigEntry<LogLevel> LogLevel { get; set; }
+        internal static ConfigEntry<ModdingUtils.LogLevel> LogLevelConfig { get; set; }
         internal static Harmony harmony;
+        internal static ManualLogSource PluginLogger;
 
-        public static void DoPatching()
+        private static ModdingUtils.LogLevel LogLevel => LogLevelConfig.Value == ModdingUtils.LogLevel.Inherited ? ModdingUtils.LogLevelConfig.Value : LogLevelConfig.Value;
+
+        public void DoPatching()
         {
             harmony = new Harmony(Guid);
             harmony.PatchAll();
-            if (LogLevel.Value > CustomAssetsKind.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Patched.");
+            if (LogLevel > ModdingUtils.LogLevel.None) 
+                PluginLogger.LogInfo($"Patched.");
         }
 
-        public static void UnPatch()
+        public void UnPatch()
         {
             harmony.UnpatchSelf();
-            if (LogLevel.Value > CustomAssetsKind.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Unpatched.");
+            if (LogLevel > ModdingUtils.LogLevel.None) 
+                PluginLogger.LogInfo($"Unpatched.");
         }
 
-        public static void DoConfig(ConfigFile Config)
+        public void DoConfig(ConfigFile Config)
         {
-            LogLevel = Config.Bind("Logging", "Level", CustomAssetsKind.LogLevel.Low);
-            if (LogLevel.Value > CustomAssetsKind.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Config Bound.");
+            LogLevelConfig = Config.Bind("Logging", "Level", ModdingUtils.LogLevel.Low);
+            if (LogLevel > ModdingUtils.LogLevel.None) 
+                PluginLogger.LogInfo($"Config Bound.");
         }
 
         private void Awake()
         {
+            PluginLogger = Logger;
             DoConfig(Config);
-            DoPatching();
-            if (LogLevel.Value > CustomAssetsKind.LogLevel.None) Debug.Log($"Custom Asset Library Plugin:{Name} is Active.");
+            try
+            {
+                DoPatching();
+                if (LogLevel > ModdingUtils.LogLevel.None)
+                    PluginLogger.LogInfo($"Plugin is now Active.");
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e);
+                UnPatch();
+                if (LogLevel > ModdingUtils.LogLevel.None)
+                    PluginLogger.LogInfo($"Plugin failed to patch");
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
+using LordAshes;
 using Newtonsoft.Json;
 using Unity.Collections;
 using Unity.Entities;
@@ -69,7 +70,7 @@ namespace CustomAssetsCompiler.CoreDTO
         public void FromJson(string path)
         {
             string text = File.ReadAllText(Path.Combine(path,"index.json"));
-            var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            var index = SmartConvert.Json.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
 
             var name = Path.GetDirectoryName(path);
             if (name != null && name.Contains("-"))
