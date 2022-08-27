@@ -3,7 +3,6 @@ using BepInEx;
 using BepInEx.Configuration;
 using Bounce.Unmanaged;
 using CustomAssetsLibrary.DTO;
-using CustomAssetsLibrary.Tests;
 using CustomAssetsLibrary.Patches;
 using HarmonyLib;
 using LordAshes;
@@ -34,6 +33,7 @@ namespace CustomAssetsLibrary
         internal static ConfigEntry<bool> AutoClear { get; set; }
         internal static ConfigEntry<bool> RunTestsConfig { get; set; }
         internal static ConfigEntry<LogLevel> LogLevel { get; set; }
+
         internal static Harmony harmony;
 
         public static void DoPatching()
@@ -47,22 +47,6 @@ namespace CustomAssetsLibrary
         {
             harmony.UnpatchSelf();
             if (LogLevel.Value > CustomAssetsLibrary.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Unpatched.");
-        }
-
-        public static void RunTests()
-        {
-            // Can create / Serialize
-            new AssetLoaderTest().RunTests();
-            
-            new AtlasTest().RunTests();
-            new CreatureTest().RunTests();
-            new IndexTest().RunTests();
-            new MusicTest().RunTests();
-            new PlaceableTest().RunTests();
-
-            new AssetPackTest().RunTests();
-
-            new AssetDbPatchTest().RunTests();
         }
 
         public static void DoConfig(ConfigFile Config)
@@ -96,6 +80,7 @@ namespace CustomAssetsLibrary
             var indexDestinationLocation = Path.Combine(directory, "index");
             var writer = new StreamBinaryWriter(indexDestinationLocation);
             writer.Write(blobref);
+            File.WriteAllText(Path.Combine(directory, "assetpack.id"), content.assetPackString);
         }
 
         /// <summary>

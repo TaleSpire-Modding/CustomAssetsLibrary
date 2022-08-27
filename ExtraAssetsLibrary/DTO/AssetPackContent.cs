@@ -19,6 +19,8 @@ namespace CustomAssetsLibrary.DTO
         public List<Atlas> Atlases = new List<Atlas>();
         public List<MusicData> Music = new List<MusicData>();
 
+        internal string assetPackString;
+
         internal BlobAssetReference<AssetPackIndex> GenerateBlobAssetReference()
         {
             var builder = new BlobBuilder(Allocator.Temp);
@@ -85,6 +87,7 @@ namespace CustomAssetsLibrary.DTO
 
         private void LoadFromIndex(CustomAssetsPlugin.Data.Index index)
         {
+            assetPackString = index.assetPackId;
             var assetPackId = new NGuid(index.assetPackId);
             Name = index.Name;
             Debug.Log($"asset pack being loaded:{assetPackId}");
