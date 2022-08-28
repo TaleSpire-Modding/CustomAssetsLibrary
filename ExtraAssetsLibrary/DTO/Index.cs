@@ -19,24 +19,18 @@ namespace CustomAssetsLibrary.DTO
             public class AssetType
             {
                 public LoaderDataType LoaderData { get; set; } = default(LoaderDataType);
-                public string Position { get; set; } = "0,0,0";
-                public string Rotation { get; set; } = "0,0,0,0";
-                public string Scale { get; set; } = "1,1,1";
+                public List<float> Position { get; set; } = new List<float>();
+                public List<float> Rotation { get; set; } = new List<float>();
+                public List<float> Scale { get; set; } = new List<float>();
             }
 
             public class BoundsType
             {
-                public string m_Center { get; set; } = "0.5,0.5,0.5";
-                public string m_Extent { get; set; } = "1,1,1";
-
-                private float3 VectorFromString(string data)
-                {
-                    var x = data.Split(',').Select(s => s.Replace(",", "")).ToArray();
-                    return new float3(float.Parse(x[0]), float.Parse(x[1]), float.Parse(x[2]));
-                }
+                public List<float> m_Center { get; set; } = new List<float>();
+                public List<float> m_Extent { get; set; } = new List<float>();
 
                 public Bounds ToBounds() => 
-                    new Bounds(VectorFromString(m_Center), VectorFromString(m_Extent));
+                    new Bounds(AssetPackContent.VectorFromList(m_Center), AssetPackContent.VectorFromList(m_Extent));
             }
 
             public class RegionType

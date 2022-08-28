@@ -13,16 +13,46 @@ using LordAshes;
 // ReSharper disable once CheckNamespace
 namespace CustomAssetsLibrary.Patches
 {
-    
-    [HarmonyPatch(typeof(AssetLoadManager), "DispatchAtlasLoads")]
-    public class UIAssetBrowserPatch
+    /*
+    [HarmonyPatch(typeof(AssetLibraryDbCategory), "SetupData")]
+    public class AssetLibraryDbCategoryPatch
     {
-        public static void Postfix(ref Texture2D[] __result)
+        internal static Dictionary<string,List<NGuid>> extraPacks = new Dictionary<string, List<NGuid>>();
+
+        public static void Prefix(ref List<AssetCampaignSetting> ___includedSettings)
         {
-            if (CustomAssetLib.LogLevel.Value >= LogLevel.High)
-                Debug.Log($"Atlas Indexes Found: {__result.Length}");
+            Debug.Log("CAL: Inserting Settings");
+            foreach (var entries in extraPacks)
+            {
+                Debug.Log($"CAL: Inserting {entries.Key}");
+                if (___includedSettings.All(s => s.CampaignSettingName != entries.Key))
+                {
+                    AssetCampaignSetting instance = ScriptableObject.CreateInstance<AssetCampaignSetting>();
+                    instance.SetValue("CampaignSettingName", entries.Key);
+                    ___includedSettings.Add(instance);
+                    instance.Expanded = true;
+                }
+
+                var setting = ___includedSettings.Single(s => s.CampaignSettingName == entries.Key);
+
+                var mi = typeof(AssetCampaignSetting).GetField("includedPackageIdStrings", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+                var result = (List<string>) mi?.GetValue(setting);
+                
+                result.AddRange(entries.Value.Select(v => v.ToHexString()));
+            }
         }
     }
+
+
+    [HarmonyPatch(typeof(AssetLoadManager), "LoadAssetPackData")]
+    public class UIAssetBrowserPatch
+    {
+        public static void Postfix(ref BlobAssetReference<AssetPackIndex> __result)
+        {
+            if (CustomAssetLib.LogLevel.Value >= LogLevel.High)
+                Debug.Log($"CAL API Found: {__result.Value.Name.ToString()}");
+        }
+    }*/
     
 
     [HarmonyPatch(typeof(AssetLoadManager), "LoadInternalAssetPack")]
@@ -85,7 +115,12 @@ namespace CustomAssetsLibrary.Patches
 
                 File.WriteAllText(Path.Combine(directory, "assetpack.id"), index.assetPackId);
             }
-
+            /*
+            if (!AssetLibraryDbCategoryPatch.extraPacks.ContainsKey("Medieval Fantasy"))
+                AssetLibraryDbCategoryPatch.extraPacks.Add("Medieval Fantasy",new List<NGuid>( ));
+            AssetLibraryDbCategoryPatch.extraPacks["Medieval Fantasy"].Add(guid);
+            Debug.Log($"Adding to extrapacks{guid.ToHexString()}");
+            */
             var instance = SimpleSingletonBehaviour<AssetLoadManager>.Instance;
             
             instance.call("LoadInternalAssetPack", new object[] { guid, directory });
