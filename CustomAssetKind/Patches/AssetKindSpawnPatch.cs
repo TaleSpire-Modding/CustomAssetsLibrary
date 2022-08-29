@@ -36,10 +36,6 @@ namespace CustomAssetsLibrary.Patches
     {
         public static bool assetFound;
 
-        public static void Postfix(ref NGuid nGuid, ref bool __result)
-        {
-            if (!assetFound == true)
-                assetFound = __result;
-        }
+        public static void Postfix(ref NGuid nGuid, ref bool __result) => assetFound |= __result;
     }
 }

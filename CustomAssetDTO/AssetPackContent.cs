@@ -4,7 +4,6 @@ using System.Linq;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
 using LordAshes;
-using Newtonsoft.Json;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -22,6 +21,8 @@ namespace CustomAssetsCompiler.CoreDTO
         public List<Atlas> Atlases = new List<Atlas>();
         public List<MusicData> Music = new List<MusicData>();
         public List<CustomKinds> Custom = new List<CustomKinds>();
+
+        public string assetPackString;
 
         public BlobAssetReference<AssetPackIndex> GenerateBlobAssetReference()
         {
@@ -66,34 +67,24 @@ namespace CustomAssetsCompiler.CoreDTO
             builder.Dispose();
             return api;
         }
-
         public void FromJson(string path)
         {
-            string text = File.ReadAllText(Path.Combine(path,"index.json"));
+            var text = File.ReadAllText(Path.Combine(path, "index.json"));
+
             var index = SmartConvert.Json.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
-
-            var name = Path.GetDirectoryName(path);
-            if (name != null && name.Contains("-"))
-                name = name.Substring(name.IndexOf("-")+1).Replace('_',' ');
-
-            if (string.IsNullOrWhiteSpace(index.Name)) index.Name = name;
+            if (string.IsNullOrWhiteSpace(index.Name)) index.Name = "Medieval Fantasy";
             LoadFromIndex(index);
         }
 
-        private float3 VectorFromString(string data)
-        {
-            var x = data.Split(',').Select(s => s.Replace(",","")).ToArray();
-            return new float3(float.Parse(x[0]), float.Parse(x[1]), float.Parse(x[2]));
-        }
+        internal static float3 VectorFromList(List<float> data)
+         => new float3(data.Count > 0 ? data[0] : 0, data.Count > 1 ? data[1] : 0, data.Count > 2 ? data[2] : 0);
 
-        private quaternion RotationFromString(string data)
-        {
-            var x = data.Split(',').Select(s => s.Replace(",", "")).ToArray();
-            return new quaternion(float.Parse(x[0]), float.Parse(x[1]), float.Parse(x[2]),0f);
-        }
+        internal static quaternion RotationFromList(List<float> data)
+         => new quaternion(data.Count > 0 ? data[0] : 0, data.Count > 1 ? data[1] : 0, data.Count > 2 ? data[2] : 0, data.Count > 3 ? data[3] : 0);
 
         private void LoadFromIndex(CustomAssetsPlugin.Data.Index index)
         {
+            assetPackString = index.assetPackId;
             var assetPackId = new NGuid(index.assetPackId);
             Name = index.Name;
             Debug.Log($"asset pack being loaded:{assetPackId}");
@@ -153,16 +144,16 @@ namespace CustomAssetsCompiler.CoreDTO
                     OrientationOffset = 0,
                     TotalVisualBounds = tile.ColliderBoundsBound.ToBounds(),
                     ColliderBoundsBound = tile.ColliderBoundsBound.ToBounds(),
-                    Colliders = new List<Bounds>{ tile.ColliderBoundsBound.ToBounds() }
+                    Colliders = new List<Bounds> { tile.ColliderBoundsBound.ToBounds() }
                 };
                 foreach (var tileAsset in tile.Assets)
                 {
                     newTile.Assets.Add(new AssetLoaderData
                     {
                         assetName = tileAsset.LoaderData.AssetName,
-                        position = VectorFromString(tileAsset.Position),
-                        scale = VectorFromString(tileAsset.Scale),
-                        rotation = RotationFromString(tileAsset.Rotation),
+                        position = VectorFromList(tileAsset.Position),
+                        scale = VectorFromList(tileAsset.Scale),
+                        rotation = RotationFromList(tileAsset.Rotation),
                         assetPackId = assetPackId,
                         path = tileAsset.LoaderData.BundleId
                     });
@@ -202,9 +193,9 @@ namespace CustomAssetsCompiler.CoreDTO
                     newProp.Assets.Add(new AssetLoaderData
                     {
                         assetName = propAsset.LoaderData.AssetName,
-                        position = VectorFromString(propAsset.Position),
-                        scale = VectorFromString(propAsset.Scale),
-                        rotation = RotationFromString(propAsset.Rotation),
+                        position = VectorFromList(propAsset.Position),
+                        scale = VectorFromList(propAsset.Scale),
+                        rotation = RotationFromList(propAsset.Rotation),
                         assetPackId = assetPackId,
                         path = propAsset.LoaderData.BundleId
                     });
@@ -222,25 +213,25 @@ namespace CustomAssetsCompiler.CoreDTO
                     defaultScale = creature.DefaultScale,
                     isDeprecated = creature.IsDeprecated,
                     isGmOnly = false,
-                    @group = creature.GroupTag,
+                    group = creature.GroupTag,
                     baseRadius = 0.5f,
                     baseLoaderData = new AssetLoaderData
                     {
                         assetName = creature.BaseAsset.LoaderData.AssetName,
                         assetPackId = CreatureData.DefaultBase.assetPackId,
-                        position = VectorFromString(creature.BaseAsset.Position),
-                        scale = VectorFromString(creature.BaseAsset.Scale),
+                        position = VectorFromList(creature.BaseAsset.Position),
+                        scale = VectorFromList(creature.BaseAsset.Scale),
                         path = creature.BaseAsset.LoaderData.BundleId,
-                        rotation = RotationFromString(creature.BaseAsset.Rotation)
+                        rotation = RotationFromList(creature.BaseAsset.Rotation)
                     },
                     modelLoaderData = new AssetLoaderData
                     {
                         assetName = creature.MiniAsset.LoaderData.AssetName,
                         assetPackId = assetPackId,
-                        position = VectorFromString(creature.MiniAsset.Position),
-                        scale = VectorFromString(creature.MiniAsset.Scale),
+                        position = VectorFromList(creature.MiniAsset.Position),
+                        scale = VectorFromList(creature.MiniAsset.Scale),
                         path = creature.MiniAsset.LoaderData.BundleId,
-                        rotation = RotationFromString(creature.MiniAsset.Rotation)
+                        rotation = RotationFromList(creature.MiniAsset.Rotation)
                     },
                     dbGroupTag = new DbGroupTag
                     {
@@ -253,11 +244,11 @@ namespace CustomAssetsCompiler.CoreDTO
                     headPos = float3.zero,
                     hitPos = float3.zero,
                     torchPos = float3.zero,
-                    baseCylinderBounds = new CreatureCylinderBounds(new float3(0,0,0), 1, 0.5f),
+                    baseCylinderBounds = new CreatureCylinderBounds(new float3(0, 0, 0), 1, 0.5f),
                     creatureBounds = new Bounds(),
                     modelCylinderBounds = new CreatureCylinderBounds(new float3(0, 0, 0), 1, 0.5f),
                     height = 1,
-                    iconInfo = (creature.Icon.AtlasIndex,creature.Icon.Region.ToRegion),
+                    iconInfo = (creature.Icon.AtlasIndex, creature.Icon.Region.ToRegion),
                     tags = creature.Tags
                 };
                 Creatures.Add(creatureData);
@@ -279,7 +270,7 @@ namespace CustomAssetsCompiler.CoreDTO
                     {
                         ModelAsset = new AssetLoaderData()
                         {
-                            
+
                         }
                     });
                 }
