@@ -100,8 +100,6 @@ namespace CustomAssetsLibrary.Patches
             if (CustomAssetLib.LogLevel.Value >= LogLevel.Low)
                 Debug.Log($"Index found in: {directory}");
 
-            var text = File.ReadAllText(Path.Combine(directory, "index.json"));
-
             NGuid guid;
 
             if (File.Exists(Path.Combine(directory, "assetpack.id")))
@@ -110,6 +108,7 @@ namespace CustomAssetsLibrary.Patches
             }
             else
             {
+                var text = File.ReadAllText(Path.Combine(directory, "index.json"));
                 var index = SmartConvert.Json.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
                 guid = new NGuid(index.assetPackId);
 
