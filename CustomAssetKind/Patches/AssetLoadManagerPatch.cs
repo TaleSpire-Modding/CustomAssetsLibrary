@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Bounce.Animation;
 using Bounce.Unmanaged;
 using CustomAssetsCompiler.CoreDTO;
 using HarmonyLib;

@@ -28,7 +28,7 @@ namespace CustomAssetsCompiler
             var indexDestinationLocation = Path.Combine(directory, "index");
             var writer = new StreamBinaryWriter(indexDestinationLocation);
             writer.Write(blobref);
-            File.WriteAllText(Path.Combine(directory, "assetpack.id"), content.assetPackString);
+            File.WriteAllText(Path.Combine(directory, "assetpack.id"), $"{content.assetPackString},{content.Name}");
         }
 
         /// <summary>

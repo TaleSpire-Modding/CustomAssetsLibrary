@@ -11,7 +11,7 @@ namespace CustomAssetsLibrary
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetLib";
         public const string Version = "1.1.1.1";
-        private const string Name = "Plugin Masters' Custom Asset Library";
+        private const string Name = "Custom Asset Library";
 
         // Public interface method to generate a binary INDEX for CAP
         public static void Generate(string directory)

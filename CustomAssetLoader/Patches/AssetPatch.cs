@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System;
+using System.Linq;
 using System.Text;
 using Bounce.Singletons;
 using Bounce.Unmanaged;
@@ -40,24 +41,43 @@ namespace CustomAssetsLibrary.Patches
             if (CustomAssetLoader.LogLevel.Value >= LogLevel.Low)
                 Debug.Log($"Index found in: {directory}");
 
-            var guid = GetGuidFromDirectory(directory);
-            var instance = SimpleSingletonBehaviour<AssetLoadManager>.Instance;
-            
-            instance.call("LoadInternalAssetPack", new object[] { guid, directory });
+            var guid = GetGuidFromDirectory(directory, out var assetPackName);
 
+            var packConfig = CustomAssetLoader.ConfigWriter.Bind("Load Asset Pack", assetPackName, true);
+
+            if (!packConfig.Value) return;
+            var instance = SimpleSingletonBehaviour<AssetLoadManager>.Instance;
+            instance.call("LoadInternalAssetPack", new object[] { guid, directory });
             if (CustomAssetLoader.LogLevel.Value >= LogLevel.Low)
                 Debug.Log($"Pack {guid} Loaded");
         }
 
-        private static NGuid GetGuidFromDirectory(string directory)
+        private static NGuid GetGuidFromDirectory(string directory, out string assetPackName)
         {
-            if (File.Exists(Path.Combine(directory, "assetpack.id")))
-                return new NGuid(File.ReadAllText(Path.Combine(directory, "assetpack.id")));
-            
-            var text = File.ReadAllText(Path.Combine(directory, "index.json"));
-            var index = SmartConvert.Json.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
-            File.WriteAllText(Path.Combine(directory, "assetpack.id"), index.assetPackId);
+            string text;
+            CustomAssetsPlugin.Data.Index index;
 
+            if (File.Exists(Path.Combine(directory, "assetpack.id")))
+            {
+                var csv = File.ReadAllText(Path.Combine(directory, "assetpack.id")).Split(',').Select(s => s.Replace(",","")).ToArray();
+                if (csv.Length < 2)
+                {
+                    text = File.ReadAllText(Path.Combine(directory, "index.json"));
+                    index = SmartConvert.Json.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+                    File.WriteAllText(Path.Combine(directory, "assetpack.id"), $"{index.assetPackId},{index.Name}");
+                    assetPackName = index.Name;
+                }
+                else
+                {
+                    assetPackName = csv[1];
+                }
+                return new NGuid(csv[0]);
+            }
+            
+            text = File.ReadAllText(Path.Combine(directory, "index.json"));
+            index = SmartConvert.Json.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            File.WriteAllText(Path.Combine(directory, "assetpack.id"), $"{index.assetPackId},{index.Name}");
+            assetPackName = index.Name;
             return new NGuid(index.assetPackId);
         }
 

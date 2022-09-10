@@ -25,12 +25,13 @@ namespace CustomAssetsLoader
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetLoader";
         public const string Version = "1.0.0.0";
-        private const string Name = "Plugin Masters' Custom Asset Loader";
+        private const string Name = "Custom Asset Loader";
 
         internal static ConfigEntry<bool> AutoClear { get; set; }
         internal static ConfigEntry<bool> RunTestsConfig { get; set; }
         internal static ConfigEntry<LogLevel> LogLevel { get; set; }
         internal static Harmony harmony;
+        internal static ConfigFile ConfigWriter;
 
         public static void DoPatching()
         {
@@ -47,6 +48,7 @@ namespace CustomAssetsLoader
 
         public static void DoConfig(ConfigFile Config)
         {
+            ConfigWriter = Config;
             AutoClear = Config.Bind("Mini Loading", "Auto Clear Failed Minis", false);
             LogLevel = Config.Bind("Logging", "Level", CustomAssetsLoader.LogLevel.Low);
             RunTestsConfig = Config.Bind("Tests", "Execute", false);
