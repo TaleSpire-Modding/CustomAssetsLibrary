@@ -9,9 +9,9 @@ using CustomAssetsLoader.ReflecExt;
 using HarmonyLib;
 using MD5 = System.Security.Cryptography.MD5;
 using UnityEngine;
-using Newtonsoft.Json;
 using CustomAssetsCompiler.CoreDTO;
 using LordAshes;
+using ModdingTales;
 
 // ReSharper disable once CheckNamespace
 namespace CustomAssetsLibrary.Patches
@@ -38,17 +38,17 @@ namespace CustomAssetsLibrary.Patches
         public static void LoadDirectory(string directory)
         {
             if (!File.Exists(Path.Combine(directory, "index.json"))) return; // Needs an index
-            if (CustomAssetLoader.LogLevel.Value >= LogLevel.Low)
+            if (CustomAssetLoader.LogLevel != ModdingUtils.LogLevel.None)
                 Debug.Log($"Index found in: {directory}");
 
             var guid = GetGuidFromDirectory(directory, out var assetPackName);
 
-            var packConfig = CustomAssetLoader.ConfigWriter.Bind("Load Asset Pack", assetPackName, true);
+            // var packConfig = CustomAssetLoader.ConfigWriter.Bind("Load Asset Pack", assetPackName, true);
 
-            if (!packConfig.Value) return;
+            // if (!packConfig.Value) return;
             var instance = SimpleSingletonBehaviour<AssetLoadManager>.Instance;
             instance.call("LoadInternalAssetPack", new object[] { guid, directory });
-            if (CustomAssetLoader.LogLevel.Value >= LogLevel.Low)
+            if (CustomAssetLoader.LogLevel != ModdingUtils.LogLevel.None)
                 Debug.Log($"Pack {guid} Loaded");
         }
 

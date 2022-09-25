@@ -32,7 +32,7 @@ namespace CustomAssetsKind.Patches
         public static void LoadDirectory(string directory)
         {
             if (!File.Exists(Path.Combine(directory, "index.json")) || !File.Exists(Path.Combine(directory, "customIndex"))) return; // Needs a custom index
-            if (CustomAssetKindPlugin.LogLevelConfig.Value >= ModdingUtils.LogLevel.Low)
+            if (CustomAssetKindPlugin.LogLevelConfig.Value != ModdingUtils.LogLevel.None)
                 Debug.Log($"Index found in: {directory}");
 
             var guid = GetGuidFromDirectory(directory);
@@ -40,7 +40,7 @@ namespace CustomAssetsKind.Patches
             // TODO
             // Handle loading of customPackIndex
             
-            if (CustomAssetKindPlugin.LogLevelConfig.Value >= ModdingUtils.LogLevel.Low)
+            if (CustomAssetKindPlugin.LogLevelConfig.Value != ModdingUtils.LogLevel.None)
                 Debug.Log($"Pack {guid} Loaded");
         }
 

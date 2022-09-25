@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Bounce.TaleSpire.AssetManagement;
@@ -15,7 +16,7 @@ namespace CustomAssetsCompiler.CoreDTO
 {
     public sealed class AssetPackContent
     {
-        public string Name = "Medieval Fantasy";
+        public string Name = $"Medieval Fantasy";
         public List<PlaceableData> Placeable = new List<PlaceableData>();
         public List<CreatureData> Creatures = new List<CreatureData>();
         public List<Atlas> Atlases = new List<Atlas>();
@@ -87,10 +88,7 @@ namespace CustomAssetsCompiler.CoreDTO
             assetPackString = index.assetPackId;
             var assetPackId = new NGuid(index.assetPackId);
             Name = index.Name;
-            Debug.Log($"asset pack being loaded:{assetPackId}");
-
-            Debug.Log($"Loading Atlas packs");
-
+            
             foreach (var atlas in index.IconsAtlas)
             {
                 var newAtlas = new Atlas
@@ -101,11 +99,9 @@ namespace CustomAssetsCompiler.CoreDTO
                 };
                 Atlases.Add(newAtlas);
             }
-            Debug.Log($"Loaded: {index.IconsAtlas.Count} Atlas packs");
-
+            
             foreach (var music in index.Music)
             {
-                Debug.Log($"Loaded {music.Name} into ");
                 var newMusic = new MusicData
                 {
                     Id = new NGuid(music.Id),
@@ -118,7 +114,6 @@ namespace CustomAssetsCompiler.CoreDTO
                     tags = music.Tags,
                 };
                 Music.Add(newMusic);
-                Debug.Log($"Loaded {music.Name} music into APC");
             }
 
             foreach (var tile in index.Tiles)
@@ -159,8 +154,6 @@ namespace CustomAssetsCompiler.CoreDTO
                     });
                 }
                 Placeable.Add(newTile);
-
-                Debug.Log($"Loaded {tile.Name} tile into APC");
             }
 
             foreach (var prop in index.Props)
@@ -201,7 +194,6 @@ namespace CustomAssetsCompiler.CoreDTO
                     });
                 }
                 Placeable.Add(newProp);
-                Debug.Log($"Loaded {prop.Name} prop into APC");
             }
 
             foreach (var creature in index.Creatures)
@@ -252,7 +244,6 @@ namespace CustomAssetsCompiler.CoreDTO
                     tags = creature.Tags
                 };
                 Creatures.Add(creatureData);
-                Debug.Log($"Loaded {creature.Name} creature into APC");
             }
 
             foreach (var custom in index.Custom)

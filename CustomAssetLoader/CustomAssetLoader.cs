@@ -4,22 +4,15 @@ using Bounce.Unmanaged;
 using CustomAssetsLibrary.Patches;
 using HarmonyLib;
 using LordAshes;
+using ModdingTales;
+using PluginUtilities;
 using UnityEngine;
 
 namespace CustomAssetsLoader
 {
-    public enum LogLevel
-    {
-        None,
-        Low,
-        Medium,
-        High,
-        All,
-    }
-
-
     [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(SmartConvert.Guid)]
+    [BepInDependency(SetInjectionFlag.Guid)]
     public sealed class CustomAssetLoader : BaseUnityPlugin
     {
         // constants
@@ -27,39 +20,41 @@ namespace CustomAssetsLoader
         public const string Version = "1.0.0.0";
         private const string Name = "Custom Asset Loader";
 
-        internal static ConfigEntry<bool> AutoClear { get; set; }
-        internal static ConfigEntry<bool> RunTestsConfig { get; set; }
-        internal static ConfigEntry<LogLevel> LogLevel { get; set; }
+        // internal static ConfigEntry<bool> AutoClear { get; set; }
+        // internal static ConfigEntry<bool> RunTestsConfig { get; set; }
+        internal static ConfigEntry<ModdingUtils.LogLevel> _logLevel { get; set; }
         internal static Harmony harmony;
         internal static ConfigFile ConfigWriter;
+
+        internal static ModdingUtils.LogLevel LogLevel => _logLevel.Value == ModdingUtils.LogLevel.Inherited ? ModdingUtils.LogLevelConfig.Value : _logLevel.Value;
 
         public static void DoPatching()
         {
             harmony = new Harmony(Guid);
             harmony.PatchAll();
-            if (LogLevel.Value > CustomAssetsLoader.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Patched.");
+            if (LogLevel > ModdingUtils.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Patched.");
         }
 
         public static void UnPatch()
         {
             harmony.UnpatchSelf();
-            if (LogLevel.Value > CustomAssetsLoader.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Unpatched.");
+            if (LogLevel > ModdingUtils.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Unpatched.");
         }
 
         public static void DoConfig(ConfigFile Config)
         {
             ConfigWriter = Config;
-            AutoClear = Config.Bind("Mini Loading", "Auto Clear Failed Minis", false);
-            LogLevel = Config.Bind("Logging", "Level", CustomAssetsLoader.LogLevel.Low);
-            RunTestsConfig = Config.Bind("Tests", "Execute", false);
-            if (LogLevel.Value > CustomAssetsLoader.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Config Bound.");
+            // AutoClear = Config.Bind("Mini Loading", "Auto Clear Failed Minis", false);
+            _logLevel = Config.Bind("Logging", "Log Level", ModdingUtils.LogLevel.Inherited);
+            // RunTestsConfig = Config.Bind("Tests", "Execute", false);
+            if (LogLevel > ModdingUtils.LogLevel.None) Debug.Log($"Custom Asset Library Plugin: Config Bound.");
         }
 
         private void Awake()
         {
             DoConfig(Config);
             DoPatching();
-            if (LogLevel.Value > CustomAssetsLoader.LogLevel.None) Debug.Log($"Custom Asset Library Plugin:{Name} is Active.");
+            if (LogLevel > ModdingUtils.LogLevel.None) Debug.Log($"Custom Asset Library Plugin:{Name} is Active.");
         }
 
         /// <summary>

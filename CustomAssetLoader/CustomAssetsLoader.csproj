@@ -852,6 +852,10 @@
       <HintPath>..\packages\NUnit.3.13.3\lib\net45\nunit.framework.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="SetInjectionFlagPlugin">
+      <HintPath>..\..\..\..\..\..\AppData\Roaming\r2modmanPlus-local\TaleSpire\profiles\CMPDev\BepInEx\plugins\brcoding-SetInjectionFlagPlugin\SetInjectionFlagPlugin.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="SmartConvertPlugin">
       <HintPath>..\..\..\..\..\..\AppData\Roaming\r2modmanPlus-local\TaleSpire\profiles\CMPDev\BepInEx\plugins\LordAshes-SmartConvertPlugin\SmartConvertPlugin.dll</HintPath>
       <Private>False</Private>

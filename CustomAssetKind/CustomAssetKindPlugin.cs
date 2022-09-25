@@ -5,11 +5,13 @@ using BepInEx.Logging;
 using HarmonyLib;
 using LordAshes;
 using ModdingTales;
+using PluginUtilities;
 
 namespace CustomAssetsKind
 {
     [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(SmartConvert.Guid)]
+    [BepInDependency(SetInjectionFlag.Guid)]
     public sealed class CustomAssetKindPlugin : BaseUnityPlugin
     {
         // constants
@@ -21,7 +23,7 @@ namespace CustomAssetsKind
         internal static Harmony harmony;
         internal static ManualLogSource PluginLogger;
 
-        private static ModdingUtils.LogLevel LogLevel => LogLevelConfig.Value == ModdingUtils.LogLevel.Inherited ? ModdingUtils.LogLevelConfig.Value : LogLevelConfig.Value;
+        internal static ModdingUtils.LogLevel LogLevel => LogLevelConfig.Value == ModdingUtils.LogLevel.Inherited ? ModdingUtils.LogLevelConfig.Value : LogLevelConfig.Value;
 
         public void DoPatching()
         {
@@ -40,7 +42,7 @@ namespace CustomAssetsKind
 
         public void DoConfig(ConfigFile Config)
         {
-            LogLevelConfig = Config.Bind("Logging", "Level", ModdingUtils.LogLevel.Low);
+            LogLevelConfig = Config.Bind("Logging", "Log Level", ModdingUtils.LogLevel.Inherited);
             if (LogLevel > ModdingUtils.LogLevel.None) 
                 PluginLogger.LogInfo($"Config Bound.");
         }
