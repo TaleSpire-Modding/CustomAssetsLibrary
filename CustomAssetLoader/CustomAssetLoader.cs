@@ -20,7 +20,7 @@ namespace CustomAssetsLoader
 
     [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(SmartConvert.Guid)]
-    public class CustomAssetLoader : BaseUnityPlugin
+    public sealed class CustomAssetLoader : BaseUnityPlugin
     {
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetLoader";

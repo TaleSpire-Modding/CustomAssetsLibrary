@@ -8,7 +8,7 @@ using HarmonyLib;
 namespace CustomAssetsLibrary.Patches
 {
     [HarmonyPatch(typeof(AssetSpawnFromTool), "SpawnUsingTool")]
-    public class AssetSpawnFromToolSpawnUsingToolPatch
+    public sealed class AssetSpawnFromToolSpawnUsingToolPatch
     {
         public static void Postfix(ref NGuid nGuid)
         {
@@ -32,7 +32,7 @@ namespace CustomAssetsLibrary.Patches
     [HarmonyPatch(typeof(AssetSpawnFromTool), "CheckIfAssetProp")]
     [HarmonyPatch(typeof(AssetSpawnFromTool), "CheckIfAssetTile")]
     [HarmonyPatch(typeof(AssetSpawnFromTool), "CheckIfEmote")]
-    public class AssetSpawnFromToolCheckPatch
+    public sealed class AssetSpawnFromToolCheckPatch
     {
         public static bool assetFound;
 

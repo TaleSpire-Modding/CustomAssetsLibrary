@@ -7,7 +7,7 @@ using UnityEngine;
 namespace CustomAssetsCompiler.CoreDTO
 {
     [Serializable]
-    public class AssetLoaderData
+    public sealed class AssetLoaderData
     {
         /// <summary>
         /// defaults to packaged asset pack

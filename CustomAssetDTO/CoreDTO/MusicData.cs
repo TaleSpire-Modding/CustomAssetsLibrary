@@ -4,7 +4,7 @@ using Unity.Entities;
 
 namespace CustomAssetsCompiler.CoreDTO
 {
-    public class MusicData
+    public sealed class MusicData
     {
         public NGuid assetPackId;
         public NGuid Id;

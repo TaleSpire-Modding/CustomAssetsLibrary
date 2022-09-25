@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace CustomAssetsKind.Singleton
 {
-    public class CustomAssetDb : SimpleSingletonBehaviour<CustomAssetDb>
+    public sealed class CustomAssetDb : SimpleSingletonBehaviour<CustomAssetDb>
     {
         // private static readonly Dictionary<NGuid, AssetPack> _assetPacks = new Dictionary<NGuid, AssetPack>(8);
 

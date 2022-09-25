@@ -3,7 +3,7 @@ using Unity.Mathematics;
 
 namespace CustomAssetsCompiler.CoreDTO
 {
-    public class Atlas
+    public sealed class Atlas
     {
         public string LocalPath = "";
         public int SizeX = 128;

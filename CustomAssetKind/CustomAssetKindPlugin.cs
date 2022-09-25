@@ -10,7 +10,7 @@ namespace CustomAssetsKind
 {
     [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(SmartConvert.Guid)]
-    public class CustomAssetKindPlugin : BaseUnityPlugin
+    public sealed class CustomAssetKindPlugin : BaseUnityPlugin
     {
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetKindPlugin";

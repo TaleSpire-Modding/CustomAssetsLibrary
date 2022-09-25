@@ -6,7 +6,7 @@ namespace CustomAssetsLibrary
 {
     [BepInPlugin(Guid, Name, Version)]
     [BepInDependency(SmartConvert.Guid)]
-    public class CustomAssetLib : BaseUnityPlugin
+    public sealed class CustomAssetLib : BaseUnityPlugin
     {
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetLib";
@@ -15,7 +15,9 @@ namespace CustomAssetsLibrary
 
         // Public interface method to generate a binary INDEX for CAP
         public static void Generate(string directory)
-            => CustomAssetsCompiler.TaleWeaverCompiler.Generate(directory);
+        {
+            CustomAssetsCompiler.TaleWeaverCompiler.Generate(directory);
+        }
 
         /// <summary>
         /// Create an NGuid from a string via MD5 Hash

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace CustomAssetsCompiler.CoreDTO
 {
-    public class CreatureData
+    public sealed class CreatureData
     {
         // Base size is 0 but still there for CMP
         public static readonly AssetLoaderData NoBase = new AssetLoaderData

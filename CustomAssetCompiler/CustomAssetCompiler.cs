@@ -18,7 +18,14 @@ namespace CustomAssetsCompiler
         All,
     }
 
-    public class CustomAssetCompiler
+    public enum impl
+    {
+        Sync,
+        Thread,
+        Burst
+    }
+
+    public sealed class CustomAssetCompiler
     {
         public const string Version = "1.0.0.0";
         

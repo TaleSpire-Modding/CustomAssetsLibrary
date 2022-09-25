@@ -8,13 +8,13 @@ namespace CustomAssetsCompiler.CoreDTO
     {
         public static partial class Data
         {
-            public class LoaderDataType
+            public sealed class LoaderDataType
             {
                 public string BundleId { get; set; } = "";
                 public string AssetName { get; set; } = "";
             }
 
-            public class AssetType
+            public sealed class AssetType
             {
                 public LoaderDataType LoaderData { get; set; } = default(LoaderDataType);
                 public List<float> Position { get; set; } = new List<float>();
@@ -22,7 +22,7 @@ namespace CustomAssetsCompiler.CoreDTO
                 public List<float> Scale { get; set; } = new List<float>();
             }
 
-            public class BoundsType
+            public sealed class BoundsType
             {
                 public List<float> m_Center { get; set; } = new List<float>();
                 public List<float> m_Extent { get; set; } = new List<float>();
@@ -31,7 +31,7 @@ namespace CustomAssetsCompiler.CoreDTO
                     new Bounds(AssetPackContent.VectorFromList(m_Center), AssetPackContent.VectorFromList(m_Extent));
             }
 
-            public class RegionType
+            public sealed class RegionType
             {
                 public string serializedVersion { get; set; } = "";
                 public float x { get; set; } = 0f;
@@ -42,13 +42,13 @@ namespace CustomAssetsCompiler.CoreDTO
                 public Rect ToRegion => new Rect(x, y, width, height);
             }
 
-            public class IconType
+            public sealed class IconType
             {
                 public int AtlasIndex { get; set; } = 0;
                 public RegionType Region { get; set; } = default(RegionType);
             }
 
-            public class TileAndPropsType
+            public sealed class TileAndPropsType
             {
                 public string Id { get; set; } = "";
                 public string Name { get; set; } = "";
@@ -61,7 +61,7 @@ namespace CustomAssetsCompiler.CoreDTO
                 public IconType Icon { get; set; } = default(IconType);
             }
 
-            public class CreatureType
+            public sealed class CreatureType
             {
                 public string Id { get; set; } = "";
                 public string Name { get; set; } = "";
@@ -74,7 +74,7 @@ namespace CustomAssetsCompiler.CoreDTO
                 public IconType Icon { get; set; } = default(IconType);
             }
 
-            public class MusicType
+            public sealed class MusicType
             {
                 public string Id { get; set; } = "";
                 public string Name { get; set; } = "";
@@ -84,19 +84,19 @@ namespace CustomAssetsCompiler.CoreDTO
                 public LoaderDataType Assets { get; set; } = default(LoaderDataType);
             }
 
-            public class IconsAtlasesType
+            public sealed class IconsAtlasesType
             {
                 public string Path { get; set; } = "";
             }
 
-            public class CustomKinds
+            public sealed class CustomKinds
             {
                 public string Kind;
                 public string Catagory;
                 public List<CustomKind> Entries = new List<CustomKind>();
             }
 
-            public class CustomKind
+            public sealed class CustomKind
             {
                 public string Id;
                 public string Name;
@@ -111,7 +111,7 @@ namespace CustomAssetsCompiler.CoreDTO
                 public string OtherSerializedData;
             }
 
-            public class Index
+            public sealed class Index
             {
                 public string assetPackId { get; set; } = "";
                 public string Name { get; set; } = "Medieval Fantasy";

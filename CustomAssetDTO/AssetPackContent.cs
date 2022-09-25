@@ -13,7 +13,7 @@ using CustomKinds = CustomAssetsKind.DTO.CustomKinds;
 
 namespace CustomAssetsCompiler.CoreDTO
 {
-    public class AssetPackContent
+    public sealed class AssetPackContent
     {
         public string Name = "Medieval Fantasy";
         public List<PlaceableData> Placeable = new List<PlaceableData>();

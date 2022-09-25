@@ -33,14 +33,14 @@ namespace Bounce.TaleSpire.AssetManagement
 
 namespace CustomAssetsKind.DTO
 {
-    public class CustomKinds
+    public sealed class CustomKinds
     {
         public string Kind;
         public string Catagory;
         public List<CustomData> Entries = new List<CustomData>();
     }
 
-    public class CustomData
+    public sealed class CustomData
     {
         public NGuid Id;
         public string Name;

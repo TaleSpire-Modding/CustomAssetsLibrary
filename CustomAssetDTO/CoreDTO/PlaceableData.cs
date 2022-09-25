@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace CustomAssetsCompiler.CoreDTO
 {
-    public class PlaceableData
+    public sealed class PlaceableData
     {
         public NGuid assetPackId;
         public NGuid Id;

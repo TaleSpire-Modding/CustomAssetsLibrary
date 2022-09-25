@@ -18,7 +18,7 @@ namespace CustomAssetsLibrary.Patches
 {
     
     [HarmonyPatch(typeof(AssetLoadManager), "OnInstanceSetup")]
-    public class AssetDbOnSetupInternalsPatch
+    public sealed class AssetDbOnSetupInternalsPatch
     {
         private static string dirPlugin = BepInEx.Paths.PluginPath;
 

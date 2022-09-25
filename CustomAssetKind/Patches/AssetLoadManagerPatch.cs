@@ -11,7 +11,7 @@ using UnityEngine;
 namespace CustomAssetsKind.Patches
 {
     [HarmonyPatch(typeof(AssetLoadManager), "OnInstanceSetup")]
-    public class AssetDbOnSetupInternalsPatch
+    public sealed class AssetDbOnSetupInternalsPatch
     {
         private static string dirPlugin = BepInEx.Paths.PluginPath;
         private static readonly Dictionary<NGuid, string> _registeredInternalAssetPacksInfo = new Dictionary<NGuid, string>();
