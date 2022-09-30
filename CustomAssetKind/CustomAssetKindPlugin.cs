@@ -3,14 +3,12 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
-using LordAshes;
 using ModdingTales;
 using PluginUtilities;
 
 namespace CustomAssetsKind
 {
     [BepInPlugin(Guid, Name, Version)]
-    [BepInDependency(SmartConvert.Guid)]
     [BepInDependency(SetInjectionFlag.Guid)]
     public sealed class CustomAssetKindPlugin : BaseUnityPlugin
     {

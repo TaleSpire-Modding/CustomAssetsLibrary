@@ -12,6 +12,7 @@ using UnityEngine;
 using CustomAssetsCompiler.CoreDTO;
 using LordAshes;
 using ModdingTales;
+using Newtonsoft.Json;
 
 // ReSharper disable once CheckNamespace
 namespace CustomAssetsLibrary.Patches
@@ -63,7 +64,7 @@ namespace CustomAssetsLibrary.Patches
                 if (csv.Length < 2)
                 {
                     text = File.ReadAllText(Path.Combine(directory, "index.json"));
-                    index = SmartConvert.Json.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+                    index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
                     File.WriteAllText(Path.Combine(directory, "assetpack.id"), $"{index.assetPackId},{index.Name}");
                     assetPackName = index.Name;
                 }
@@ -75,7 +76,7 @@ namespace CustomAssetsLibrary.Patches
             }
             
             text = File.ReadAllText(Path.Combine(directory, "index.json"));
-            index = SmartConvert.Json.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
             File.WriteAllText(Path.Combine(directory, "assetpack.id"), $"{index.assetPackId},{index.Name}");
             assetPackName = index.Name;
             return new NGuid(index.assetPackId);

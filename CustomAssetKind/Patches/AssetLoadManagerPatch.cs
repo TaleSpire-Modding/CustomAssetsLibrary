@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Bounce.Animation;
 using Bounce.Unmanaged;
 using CustomAssetsCompiler.CoreDTO;
 using HarmonyLib;
-using LordAshes;
 using ModdingTales;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace CustomAssetsKind.Patches
@@ -50,7 +49,7 @@ namespace CustomAssetsKind.Patches
                 return new NGuid(File.ReadAllText(Path.Combine(directory, "assetpack.id")));
 
             var text = File.ReadAllText(Path.Combine(directory, "index.json"));
-            var index = SmartConvert.Json.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
             File.WriteAllText(Path.Combine(directory, "assetpack.id"), index.assetPackId);
 
             return new NGuid(index.assetPackId);

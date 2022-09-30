@@ -1,11 +1,9 @@
 ﻿using BepInEx;
 using Bounce.Unmanaged;
-using LordAshes;
 
 namespace CustomAssetsLibrary
 {
     [BepInPlugin(Guid, Name, Version)]
-    [BepInDependency(SmartConvert.Guid)]
     public sealed class CustomAssetLib : BaseUnityPlugin
     {
         // constants
