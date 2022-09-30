@@ -49,7 +49,7 @@ namespace CustomAssetsKind.Patches
                 return new NGuid(File.ReadAllText(Path.Combine(directory, "assetpack.id")));
 
             var text = File.ReadAllText(Path.Combine(directory, "index.json"));
-            var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text, CustomAssetDTO.Sentry.Utilities.options);
             File.WriteAllText(Path.Combine(directory, "assetpack.id"), index.assetPackId);
 
             return new NGuid(index.assetPackId);

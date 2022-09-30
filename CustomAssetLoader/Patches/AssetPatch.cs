@@ -64,7 +64,7 @@ namespace CustomAssetsLibrary.Patches
                 if (csv.Length < 2)
                 {
                     text = File.ReadAllText(Path.Combine(directory, "index.json"));
-                    index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+                    index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text, CustomAssetDTO.Sentry.Utilities.options);
                     File.WriteAllText(Path.Combine(directory, "assetpack.id"), $"{index.assetPackId},{index.Name}");
                     assetPackName = index.Name;
                 }
@@ -76,7 +76,7 @@ namespace CustomAssetsLibrary.Patches
             }
             
             text = File.ReadAllText(Path.Combine(directory, "index.json"));
-            index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text, CustomAssetDTO.Sentry.Utilities.options);
             File.WriteAllText(Path.Combine(directory, "assetpack.id"), $"{index.assetPackId},{index.Name}");
             assetPackName = index.Name;
             return new NGuid(index.assetPackId);

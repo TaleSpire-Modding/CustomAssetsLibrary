@@ -1,5 +1,7 @@
 ﻿using BepInEx.Logging;
+using Newtonsoft.Json;
 using System;
+using System.Globalization;
 
 namespace CustomAssetDTO.Sentry
 {
@@ -17,6 +19,11 @@ namespace CustomAssetDTO.Sentry
         };
         */
         internal const string Version = "1.0.1.0";
+
+        public static JsonSerializerSettings options = new JsonSerializerSettings
+        {
+            Culture = CultureInfo.InvariantCulture
+        };
         /*
         private static Action<Scope> _scope = scope =>
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Bounce.TaleSpire.AssetManagement;
@@ -71,7 +72,7 @@ namespace CustomAssetsCompiler.CoreDTO
         {
             var text = File.ReadAllText(Path.Combine(path, "index.json"));
 
-            var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text,CustomAssetDTO.Sentry.Utilities.options);
             if (string.IsNullOrWhiteSpace(index.Name)) index.Name = "Medieval Fantasy";
             LoadFromIndex(index);
         }
