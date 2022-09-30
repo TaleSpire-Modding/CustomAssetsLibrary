@@ -27,8 +27,6 @@ namespace CustomAssetsCompiler
 
     public sealed class CustomAssetCompiler
     {
-        public const string Version = "1.0.0.0";
-        
         // Public interface method to generate a binary INDEX for CAP
         public static void Generate(string directory, LogLevel logLevel = LogLevel.None)
         {

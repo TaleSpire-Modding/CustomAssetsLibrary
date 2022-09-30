@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Bounce.TaleSpire.AssetManagement;
 using Bounce.Unmanaged;
-using LordAshes;
+using Newtonsoft.Json;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -72,7 +71,7 @@ namespace CustomAssetsCompiler.CoreDTO
         {
             var text = File.ReadAllText(Path.Combine(path, "index.json"));
 
-            var index = SmartConvert.Json.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
+            var index = JsonConvert.DeserializeObject<CustomAssetsPlugin.Data.Index>(text);
             if (string.IsNullOrWhiteSpace(index.Name)) index.Name = "Medieval Fantasy";
             LoadFromIndex(index);
         }

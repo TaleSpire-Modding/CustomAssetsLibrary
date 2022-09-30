@@ -3,7 +3,6 @@ using BepInEx.Configuration;
 using Bounce.Unmanaged;
 using CustomAssetsLibrary.Patches;
 using HarmonyLib;
-using LordAshes;
 using ModdingTales;
 using PluginUtilities;
 using UnityEngine;
@@ -11,7 +10,6 @@ using UnityEngine;
 namespace CustomAssetsLoader
 {
     [BepInPlugin(Guid, Name, Version)]
-    [BepInDependency(SmartConvert.Guid)]
     [BepInDependency(SetInjectionFlag.Guid)]
     public sealed class CustomAssetLoader : BaseUnityPlugin
     {

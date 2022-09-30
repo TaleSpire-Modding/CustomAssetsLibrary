@@ -11,14 +11,7 @@ namespace CustomAssetsCompiler
 {
     public sealed class TaleWeaverCompiler
     {
-        public const string Version = "1.0.0.0";
-
-        // public enum impl
-        // {
-        //     Sync,
-        //     Thread,
-        //     ThreadComplete,
-        // }
+        public const string Version = "1.0.1.0";
 
         // Public interface method to generate a binary INDEX for CAP
         public static void Generate(string directory, LogLevel logLevel = LogLevel.None)
