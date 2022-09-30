@@ -11,18 +11,31 @@ namespace CustomAssetsCompiler
 {
     public sealed class TaleWeaverCompiler
     {
-        public const string Version = "1.0.1.0";
+        public const string Version = "1.0.2.0";
 
         // Public interface method to generate a binary INDEX for CAP
-        public static void Generate(string directory, LogLevel logLevel = LogLevel.None)
-        {
-            WritePack(directory, logLevel);
-        }
+        public static void Generate(string directory, LogLevel logLevel = LogLevel.None) 
+            => WritePack(directory, logLevel);
 
-        public static void WritePack(string directory, LogLevel logLevel = LogLevel.None)
+        public static void Generate(string directory, CustomAssetsPlugin.Data.Index index, LogLevel logLevel = LogLevel.None)
+            => WritePack(directory, index, logLevel);
+
+        private static void WritePack(string directory, LogLevel logLevel)
         {
             var content = new AssetPackContent();
             content.FromJson(directory);
+           WritePack(directory,content,logLevel);
+        }
+
+        private static void WritePack(string directory, CustomAssetsPlugin.Data.Index index, LogLevel logLevel = LogLevel.None)
+        {
+            var content = new AssetPackContent();
+            content.LoadFromIndex(index);
+            WritePack(directory, content, logLevel);
+        }
+
+        private static void WritePack(string directory, AssetPackContent content, LogLevel logLevel = LogLevel.None)
+        {
             if (logLevel > LogLevel.None) Debug.Log($"Added {Path.Combine(directory, "index")}");
 
             var blobref = content.GenerateBlobAssetReference();

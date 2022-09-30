@@ -83,7 +83,7 @@ namespace CustomAssetsCompiler.CoreDTO
         internal static quaternion RotationFromList(List<float> data)
          => new quaternion(data.Count > 0 ? data[0] : 0, data.Count > 1 ? data[1] : 0, data.Count > 2 ? data[2] : 0, data.Count > 3 ? data[3] : 0);
 
-        private void LoadFromIndex(CustomAssetsPlugin.Data.Index index)
+        public void LoadFromIndex(CustomAssetsPlugin.Data.Index index)
         {
             assetPackString = index.assetPackId;
             var assetPackId = new NGuid(index.assetPackId);

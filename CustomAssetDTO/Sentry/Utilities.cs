@@ -1,6 +1,4 @@
-﻿using BepInEx.Logging;
-using Newtonsoft.Json;
-using System;
+﻿using Newtonsoft.Json;
 using System.Globalization;
 
 namespace CustomAssetDTO.Sentry
@@ -22,7 +20,8 @@ namespace CustomAssetDTO.Sentry
 
         public static JsonSerializerSettings options = new JsonSerializerSettings
         {
-            Culture = CultureInfo.InvariantCulture
+            Culture = CultureInfo.InvariantCulture,
+            // Culture = CultureInfo.GetCultureInfo("de-DE"),
         };
         /*
         private static Action<Scope> _scope = scope =>
