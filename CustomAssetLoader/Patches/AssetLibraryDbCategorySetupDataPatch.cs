@@ -17,6 +17,9 @@ namespace CustomAssetsLoader.Patches
         /// </summary>
         public static void Prefix(ref List<AssetCampaignSetting>  ___includedSettings)
         {
+            if (!CustomAssetLoader.abExperiment.Value)
+                return;
+
             foreach (var pack in registerPacks)
             {
                 if (CustomAssetLoader.LogLevel > ModdingUtils.LogLevel.Medium)
@@ -58,6 +61,8 @@ namespace CustomAssetsLoader.Patches
     {
         public static bool Prefix(ref List<AssetCampaignSetting> ___includedSettings, ref int __result)
         {
+            if (!CustomAssetLoader.abExperiment.Value)
+                return true;
             __result = ___includedSettings.Count;
             return false;
         }
@@ -68,6 +73,8 @@ namespace CustomAssetsLoader.Patches
     {
         public static bool Prefix(ref List<AssetCampaignSetting> ___includedSettings, ref int index, ref string __result)
         {
+            if (!CustomAssetLoader.abExperiment.Value)
+                return true;
             __result = ___includedSettings[index].CampaignSettingName;
             return false;
         }

@@ -22,6 +22,7 @@ namespace CustomAssetsLoader
         // internal static ConfigEntry<bool> AutoClear { get; set; }
         // internal static ConfigEntry<bool> RunTestsConfig { get; set; }
         internal static ConfigEntry<ModdingUtils.LogLevel> _logLevel { get; set; }
+        internal static ConfigEntry<bool> abExperiment { get; set; }
         internal static Harmony harmony;
         internal static ConfigFile ConfigWriter;
         internal static ManualLogSource _logger;
@@ -46,6 +47,7 @@ namespace CustomAssetsLoader
             ConfigWriter = Config;
             // AutoClear = Config.Bind("Mini Loading", "Auto Clear Failed Minis", false);
             _logLevel = Config.Bind("Logging", "Log Level", ModdingUtils.LogLevel.Inherited);
+            abExperiment = Config.Bind("UI", "Experimental Asset Browser", false);
             // RunTestsConfig = Config.Bind("Tests", "Execute", false);
             if (LogLevel > ModdingUtils.LogLevel.None) _logger.LogInfo($"Config Bound.");
         }

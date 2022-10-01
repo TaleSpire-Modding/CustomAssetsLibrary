@@ -133,7 +133,7 @@ namespace CustomAssetsCompiler.CoreDTO
                     },
                     Tags = tile.Tags,
                     IconAtlasIndex = tile.Icon.AtlasIndex,
-                    IconAtlasRegion = tile.Icon.Region.ToRegion,
+                    IconAtlasRegion = tile.Icon.Region.ToRegion(),
                     IsGmOnly = false,
                     Kind = PlaceableKind.Tile,
                     OrientationOffset = 0,
@@ -173,7 +173,7 @@ namespace CustomAssetsCompiler.CoreDTO
                     },
                     Tags = prop.Tags,
                     IconAtlasIndex = prop.Icon.AtlasIndex,
-                    IconAtlasRegion = prop.Icon.Region.ToRegion,
+                    IconAtlasRegion = prop.Icon.Region.ToRegion(),
                     IsGmOnly = false,
                     Kind = PlaceableKind.Prop,
                     OrientationOffset = 0,
@@ -240,7 +240,7 @@ namespace CustomAssetsCompiler.CoreDTO
                     creatureBounds = new Bounds(),
                     modelCylinderBounds = new CreatureCylinderBounds(new float3(0, 0, 0), 1, 0.5f),
                     height = 1,
-                    iconInfo = (creature.Icon.AtlasIndex, creature.Icon.Region.ToRegion),
+                    iconInfo = (creature.Icon.AtlasIndex, creature.Icon.Region.ToRegion()),
                     tags = creature.Tags
                 };
                 Creatures.Add(creatureData);

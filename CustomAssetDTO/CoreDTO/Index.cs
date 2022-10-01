@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BepInEx;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace CustomAssetsCompiler.CoreDTO
@@ -27,8 +28,10 @@ namespace CustomAssetsCompiler.CoreDTO
                 public List<float> m_Center { get; set; } = new List<float>();
                 public List<float> m_Extent { get; set; } = new List<float>();
 
-                public Bounds ToBounds() =>
-                    new Bounds(AssetPackContent.VectorFromList(m_Center), AssetPackContent.VectorFromList(m_Extent));
+                public Bounds ToBounds()
+                {
+                    return new Bounds(AssetPackContent.VectorFromList(m_Center), AssetPackContent.VectorFromList(m_Extent));
+                }
             }
 
             public sealed class RegionType
@@ -39,7 +42,10 @@ namespace CustomAssetsCompiler.CoreDTO
                 public float width { get; set; } = 1f;
                 public float height { get; set; } = 1f;
 
-                public Rect ToRegion => new Rect(x, y, width, height);
+                public Rect ToRegion()
+                {
+                    return new Rect(x, y, width, height);
+                }
             }
 
             public sealed class IconType
