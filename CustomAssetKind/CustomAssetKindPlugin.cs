@@ -14,7 +14,7 @@ namespace CustomAssetsKind
     {
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetKindPlugin";
-        public const string Version = "1.0.0.0";
+        public const string Version = "1.1.0.0";
         private const string Name = "Custom Asset Kind";
 
         internal static ConfigEntry<ModdingUtils.LogLevel> LogLevelConfig { get; set; }

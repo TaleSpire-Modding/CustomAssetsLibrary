@@ -16,7 +16,7 @@ namespace CustomAssetDTO.Sentry
             AttachStacktrace = true
         };
         */
-        internal const string Version = "1.0.1.0";
+        internal const string Version = "1.1.0.0";
 
         public static JsonSerializerSettings options = new JsonSerializerSettings
         {

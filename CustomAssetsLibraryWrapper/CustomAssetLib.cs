@@ -10,7 +10,7 @@ namespace CustomAssetsLibrary
     {
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetLib";
-        public const string Version = "1.1.2.0";
+        public const string Version = "1.1.3.0";
         private const string Name = "Custom Asset Library";
 
         /// <summary>
