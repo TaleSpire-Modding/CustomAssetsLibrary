@@ -867,9 +867,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CustomAssetDTO\CustomAssetDTO.csproj">
+    <ProjectReference Include="..\CustomAssetDTO\CustomAssetsDTO.csproj">
       <Project>{91377d89-5e40-477d-b7e1-c0df931b7d7d}</Project>
-      <Name>CustomAssetDTO</Name>
+      <Name>CustomAssetsDTO</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

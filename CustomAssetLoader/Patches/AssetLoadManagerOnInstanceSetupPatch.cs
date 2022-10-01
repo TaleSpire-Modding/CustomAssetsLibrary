@@ -38,7 +38,7 @@ namespace CustomAssetsLibrary.Patches
         /// </summary>
         public static void LoadDirectory(string directory)
         {
-            if (!File.Exists(Path.Combine(directory, "index.json"))) return; // Needs an index
+            if (!File.Exists(Path.Combine(directory, "assetpack.id"))) return; // Needs an index
             if (CustomAssetLoader.LogLevel != ModdingUtils.LogLevel.None)
                 Debug.Log($"Index found in: {directory}");
 

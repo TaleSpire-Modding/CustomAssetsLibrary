@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30002.166
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAssetsCompiler", "CustomAssetCompiler\CustomAssetsCompiler.csproj", "{5604AC42-EEE2-4DEE-BDAB-8286ECE27248}"
 EndProject
@@ -9,9 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAssetsLoader", "Custo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAssetsKind", "CustomAssetKind\CustomAssetsKind.csproj", "{307B68D8-2427-4203-939A-F7D016C1E174}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAssetDTO", "CustomAssetDTO\CustomAssetDTO.csproj", "{91377D89-5E40-477D-B7E1-C0DF931B7D7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAssetsDTO", "CustomAssetDTO\CustomAssetsDTO.csproj", "{91377D89-5E40-477D-B7E1-C0DF931B7D7D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAssetsLibraryWrapper", "CustomAssetsLibraryWrapper\CustomAssetsLibraryWrapper.csproj", "{AD152726-7297-4EA6-A6B1-D8EB10453E5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAssetsLibraryPlugin", "CustomAssetPlugin\CustomAssetsLibraryPlugin.csproj", "{C303405D-E66C-4316-9CDB-4E3CA15C6360}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{AD152726-7297-4EA6-A6B1-D8EB10453E5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD152726-7297-4EA6-A6B1-D8EB10453E5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD152726-7297-4EA6-A6B1-D8EB10453E5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C303405D-E66C-4316-9CDB-4E3CA15C6360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C303405D-E66C-4316-9CDB-4E3CA15C6360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C303405D-E66C-4316-9CDB-4E3CA15C6360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C303405D-E66C-4316-9CDB-4E3CA15C6360}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
