@@ -24,6 +24,12 @@ namespace CustomAssetsLoader.ReflecExt
             myClassType.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(null, args);
         }
 
+        public static I GetValue<T, I>(this T t, string methodName)
+        {
+            var mi = typeof(T).GetField(methodName, BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+            return (I)mi?.GetValue(t);
+        }
+
         public static I GetValue<T,I>(string methodName)
         {
             var mi = typeof(T).GetField(methodName, BindingFlags.NonPublic | BindingFlags.Static);
