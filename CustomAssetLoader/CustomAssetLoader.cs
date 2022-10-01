@@ -16,7 +16,7 @@ namespace CustomAssetsLoader
     {
         // constants
         public const string Guid = "org.PM.plugins.CustomAssetLoader";
-        public const string Version = "1.0.1.0";
+        public const string Version = "1.1.0.0";
         private const string Name = "Custom Asset Loader";
 
         // internal static ConfigEntry<bool> AutoClear { get; set; }
