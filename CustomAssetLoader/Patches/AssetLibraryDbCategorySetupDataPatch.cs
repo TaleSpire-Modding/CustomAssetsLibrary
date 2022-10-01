@@ -21,8 +21,8 @@ namespace CustomAssetsLoader.Patches
 
             foreach (var pack in registerPacks)
             {
-
-                CustomAssetLoader ._logger.LogInfo(pack);
+                if (CustomAssetLoader.LogLevel > ModdingUtils.LogLevel.Medium)
+                    CustomAssetLoader ._logger.LogInfo(pack);
                 if (___includedSettings.All(c => c.CampaignSettingName != pack.Value))
                 {
                     var instance = ScriptableObject.CreateInstance<AssetCampaignSetting>();
