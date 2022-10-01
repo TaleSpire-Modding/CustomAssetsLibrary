@@ -10,7 +10,6 @@ using HarmonyLib;
 using MD5 = System.Security.Cryptography.MD5;
 using UnityEngine;
 using CustomAssetsCompiler.CoreDTO;
-using LordAshes;
 using ModdingTales;
 using Newtonsoft.Json;
 
@@ -19,7 +18,7 @@ namespace CustomAssetsLibrary.Patches
 {
     
     [HarmonyPatch(typeof(AssetLoadManager), "OnInstanceSetup")]
-    public sealed class AssetDbOnSetupInternalsPatch
+    public sealed class AssetLoadManagerOnInstanceSetupPatch
     {
         private static string dirPlugin = BepInEx.Paths.PluginPath;
 
@@ -47,7 +46,7 @@ namespace CustomAssetsLibrary.Patches
             // var packConfig = CustomAssetLoader.ConfigWriter.Bind("Load Asset Pack", assetPackName, true);
 
             // if (!packConfig.Value) return;
-            var instance = SimpleSingletonBehaviour<AssetLoadManager>.Instance;
+            var instance = SimpleSingletonBehaviour<global::AssetLoadManager>.Instance;
             instance.call("LoadInternalAssetPack", new object[] { guid, directory });
             if (CustomAssetLoader.LogLevel != ModdingUtils.LogLevel.None)
                 Debug.Log($"Pack {guid} Loaded");

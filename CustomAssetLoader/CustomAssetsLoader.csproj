@@ -41,7 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ReflecExt\SysReflec.cs" />
-    <Compile Include="Patches\AssetPatch.cs" />
+    <Compile Include="Patches\AssetLoadManagerOnInstanceSetupPatch.cs" />
     <Compile Include="CustomAssetLoader.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

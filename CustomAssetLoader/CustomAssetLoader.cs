@@ -61,6 +61,6 @@ namespace CustomAssetsLoader
         /// <param name="id">text to get hashed</param>
         /// <returns>NGuid of the string</returns>
         public static NGuid GenerateID(string id)
-            => AssetDbOnSetupInternalsPatch.GenerateID(id);
+            => AssetLoadManagerOnInstanceSetupPatch.GenerateID(id);
     }
 }
