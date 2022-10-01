@@ -40,6 +40,7 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Patches\AssetLibraryDbCategorySetupDataPatch.cs" />
     <Compile Include="ReflecExt\SysReflec.cs" />
     <Compile Include="Patches\AssetLoadManagerOnInstanceSetupPatch.cs" />
     <Compile Include="CustomAssetLoader.cs" />
