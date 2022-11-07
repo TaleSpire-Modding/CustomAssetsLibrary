@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using BepInEx;
-using Newtonsoft.Json;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace CustomAssetsCompiler.CoreDTO
@@ -78,6 +78,10 @@ namespace CustomAssetsCompiler.CoreDTO
                 public AssetType BaseAsset { get; set; } = default(AssetType);
                 public float DefaultScale { get; set; } = 0f;
                 public IconType Icon { get; set; } = default(IconType);
+                public float3 HeadPos { get; set; } = new float3(0,1,0);
+                public float3 TorchPos { get; set; } = new float3(0, 1, 0);
+                public float3 SpellPos { get; set; } = new float3(0, 1, 0);
+                public float3 HitPos { get; set; } = new float3(0, 1, 0);
             }
 
             public sealed class MusicType

@@ -6,7 +6,6 @@ using CustomAssetsLibrary.Patches;
 using HarmonyLib;
 using ModdingTales;
 using PluginUtilities;
-using UnityEngine;
 
 namespace CustomAssetsLoader
 {
